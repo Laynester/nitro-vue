@@ -1,0 +1,7 @@
+<div id="app">
+    {{message}}
+    <div class="loading-screen" v-if="!isReady || isError">
+        <div class="badge badge-primary">hello</div>
+    </div>
+    <Main v-if="isReady && !isError" :ready="isReady" />
+</div>
