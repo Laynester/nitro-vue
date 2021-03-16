@@ -36,8 +36,7 @@ interface vExtType extends Vue {
 	},
 })
 export default class App extends Vue implements ILinkEventTracker {
-	@Prop()
-	private ready: boolean;
+	private ready: boolean = false;
 
 	$refs!: {
 		room: vExtType;
@@ -55,6 +54,7 @@ export default class App extends Vue implements ILinkEventTracker {
 
 		this.init();
 
+		this.ready = true;
 		Nitro.instance.communication.connection.onReady();
 	}
 
