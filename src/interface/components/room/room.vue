@@ -1,6 +1,7 @@
 <template>
 	<div class="nitro-room-component">
-		<div ref="roomCanvas" class="room-view"></div>
+		<div ref="roomCanvas" class="room-view" />
+		<div class="room-widgets" ref="roomWidgets" />
 	</div>
 </template>
 
@@ -44,29 +45,22 @@ import { RoomGeometry } from "nitro-renderer/src/room/utils/RoomGeometry";
 import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
 import { Vector3d } from "nitro-renderer/src/room/utils/Vector3d";
 import { RoomObjectType } from "nitro-renderer/src/nitro/room/object/RoomObjectType";
-
-interface vExtType extends Vue {
-	[k: string]: any;
-}
+import { ChatInputHandler } from "./widgets/handlers/ChatInputHandler";
+import { RoomWidgetRoomViewUpdateEvent } from "./widgets/events/RoomWidgetRoomViewUpdateEvent";
 
 @Component({})
 export default class Room
 	extends Vue
 	implements IRoomWidgetHandlerContainer, IRoomWidgetMessageListener {
-	private static COLOR_ADJUSTMENT: AdjustmentFilter = new AdjustmentFilter();
+	private COLOR_ADJUSTMENT: AdjustmentFilter;
 
 	private _roomSession: IRoomSession;
 
-	private _events: IEventDispatcher = new EventDispatcher();
-	private _handlers: IRoomWidgetHandler[] = [];
-	private _widgetHandlerMessageMap: Map<
-		string,
-		IRoomWidgetHandler[]
-	> = new Map();
-	private _widgetHandlerEventMap: Map<
-		string,
-		IRoomWidgetHandler[]
-	> = new Map();
+	private _events: IEventDispatcher;
+	private _handlers: IRoomWidgetHandler[];
+	private _widgets: Map<string, Element>;
+	private _widgetHandlerMessageMap: Map<string, IRoomWidgetHandler[]>;
+	private _widgetHandlerEventMap: Map<string, IRoomWidgetHandler[]>;
 
 	private _roomColorAdjustor: AdjustmentFilter = null;
 	private _roomBackground: Sprite = null;
@@ -85,10 +79,17 @@ export default class Room
 
 	$refs!: {
 		roomCanvas: HTMLElement;
+		roomWidgets: HTMLElement;
 	};
 
 	public mounted() {
 		this.processEvent = this.processEvent.bind(this);
+		this.COLOR_ADJUSTMENT = new AdjustmentFilter();
+		this._events = new EventDispatcher();
+		this._handlers = [];
+		this._widgets = new Map();
+		this._widgetHandlerMessageMap = new Map();
+		this._widgetHandlerEventMap = new Map();
 	}
 
 	public beforeDestroy() {
@@ -100,7 +101,6 @@ export default class Room
 	public prepareRoom(session: IRoomSession): void {
 		if (!session) return;
 
-		console.log("hello");
 		const canvasId = this.getFirstCanvasId();
 		const width = Nitro.instance.width;
 		const height = Nitro.instance.height;
@@ -192,9 +192,9 @@ export default class Room
 		this._roomColorizerColor = 0;
 		this._roomScale = 1;
 
-		Room.COLOR_ADJUSTMENT.red = 1;
-		Room.COLOR_ADJUSTMENT.green = 1;
-		Room.COLOR_ADJUSTMENT.blue = 1;
+		this.COLOR_ADJUSTMENT.red = 1;
+		this.COLOR_ADJUSTMENT.green = 1;
+		this.COLOR_ADJUSTMENT.blue = 1;
 
 		this._handlers = [];
 		this._widgetHandlerMessageMap.clear();
@@ -450,6 +450,98 @@ export default class Room
 	public update(): void {}
 
 	public createWidget(type: string, component: any): void {
+		const existing = this._widgets.get(type);
+
+		if (existing) return;
+
+		let widgetHandler: IRoomWidgetHandler = null;
+
+		let sendSizeUpdate = false;
+		switch (type) {
+			case RoomWidgetEnum.CHAT_INPUT_WIDGET:
+				sendSizeUpdate = true;
+				widgetHandler = new ChatInputHandler();
+				break;
+		}
+		if (widgetHandler) {
+			const messageTypes = widgetHandler.messageTypes;
+
+			if (messageTypes && messageTypes.length) {
+				for (const name of messageTypes) {
+					if (!name) continue;
+
+					let messages = this._widgetHandlerMessageMap.get(name);
+
+					if (!messages) {
+						messages = [];
+
+						this._widgetHandlerMessageMap.set(name, messages);
+					}
+
+					messages.push(widgetHandler);
+				}
+			}
+
+			const eventTypes = widgetHandler.eventTypes;
+
+			eventTypes.push(
+				RoomEngineTriggerWidgetEvent.OPEN_WIDGET,
+				RoomEngineTriggerWidgetEvent.CLOSE_WIDGET
+			);
+
+			if (eventTypes && eventTypes.length) {
+				for (const name of eventTypes) {
+					if (!name) continue;
+
+					let events = this._widgetHandlerEventMap.get(name);
+
+					if (!events) {
+						events = [];
+
+						this._widgetHandlerEventMap.set(name, events);
+					}
+
+					events.push(widgetHandler);
+				}
+			}
+
+			this._handlers.push(widgetHandler);
+
+			if (component) {
+				let widgetRef: any = null;
+				let widget: IRoomWidget = null;
+
+				let componentClass = Vue.extend(component);
+
+				let inst = new componentClass();
+
+				inst.$mount();
+
+				widgetRef = this.$refs.roomWidgets.appendChild(inst.$el);
+
+				widget = (inst as unknown) as IRoomWidget;
+
+				if (!widget) return;
+
+				widget.widgetHandler = widgetHandler;
+
+				widget.messageListener = this;
+
+				widget.registerUpdateEvents(this._events);
+
+				this._widgets.set(type, widgetRef);
+			}
+
+			widgetHandler.container = this;
+		}
+
+		if (sendSizeUpdate)
+			this._events.dispatchEvent(
+				new RoomWidgetRoomViewUpdateEvent(
+					RoomWidgetRoomViewUpdateEvent.SIZE_CHANGED,
+					this.getRoomViewRect()
+				)
+			);
 		/*
     const existing = this._widgets.get(type);
 
@@ -820,7 +912,7 @@ export default class Room
 
 		if (!display) return null;
 
-		this._roomColorAdjustor = Room.COLOR_ADJUSTMENT;
+		this._roomColorAdjustor = this.COLOR_ADJUSTMENT;
 
 		display.filters = [this._roomColorAdjustor];
 

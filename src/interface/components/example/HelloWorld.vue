@@ -1,11 +1,10 @@
-<template src="./index.html"/>
+<template src="./index.html"></template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class HelloWorld extends Vue
-{
-  @Prop() private msg!: string;
+export default class HelloWorld extends Vue {
+	@Prop() private msg!: string;
 }
 </script>

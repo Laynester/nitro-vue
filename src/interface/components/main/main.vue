@@ -28,7 +28,7 @@ import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
 import Room from "../room/room.vue";
 import Navigator from "../navigator/components/main/main.vue";
 import { Services } from "../../services/Services";
-
+import ChatInput from "../room/widgets/ChatInput/ChatInput.vue";
 @Component({
 	components: {
 		Room,
@@ -51,8 +51,6 @@ export default class App extends Vue implements ILinkEventTracker {
 		Nitro.instance.addLinkEventTracker(this);
 
 		this.init();
-
-		console.log("here mounterd 32432");
 
 		Nitro.instance.communication.connection.onReady();
 	}
@@ -311,12 +309,17 @@ export default class App extends Vue implements ILinkEventTracker {
 
 		switch (event.type) {
 			case RoomEngineEvent.INITIALIZED:
-				console.log(this.$refs);
 				if (this.$refs.room) {
-					console.log(this.$refs);
 					this.$refs.room.prepareRoom(session);
 
 					Nitro.instance.roomEngine.setActiveRoomId(event.roomId);
+
+					if (!this.$refs.room.roomSession.isSpectator) {
+						this.$refs.room.createWidget(
+							RoomWidgetEnum.CHAT_INPUT_WIDGET,
+							ChatInput
+						);
+					}
 
 					/*
           this.$refs.room.createWidget(

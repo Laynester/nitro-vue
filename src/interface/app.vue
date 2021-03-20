@@ -32,8 +32,6 @@ export default class App extends Vue {
 	public isReady: boolean = false;
 
 	public created(): void {
-		console.log("here mounted");
-
 		this.onNitroEvent = this.onNitroEvent.bind(this);
 
 		this.init();

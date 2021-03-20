@@ -1,7 +1,6 @@
-<div id="app">
-    {{message}}
+<div id="nitro">
     <div class="loading-screen" v-if="!isReady || isError">
-        <div class="badge badge-primary">hello</div>
+        <div class="badge badge-primary"> {{message}}</div>
     </div>
-    <Main v-if="isReady && !isError" :ready="isReady" />
+    <Main v-if="isReady && !isError" />
 </div>
