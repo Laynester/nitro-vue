@@ -5,14 +5,15 @@ import "./assets/scss/app.scss";
 import { Component, Vue } from "vue-property-decorator";
 import Main from "./components/main/main.vue";
 
-import { Nitro } from "@/client/nitro/Nitro";
-import { NitroEvent } from "@/client/core/events/NitroEvent";
-import { WebGL } from "@/client/nitro/utils/WebGL";
-import { LegacyExternalInterface } from "@/client/nitro/externalInterface/LegacyExternalInterface";
-import { NitroCommunicationDemoEvent } from "@/client/nitro/communication/demo/NitroCommunicationDemoEvent";
-import { NitroLocalizationEvent } from "@/client/nitro/localization/NitroLocalizationEvent";
-import { ConfigurationEvent } from "@/client/core/configuration/ConfigurationEvent";
-import { RoomEngineEvent } from "@/client/nitro/room/events/RoomEngineEvent";
+import { Nitro } from "nitro-renderer/src/nitro/Nitro";
+import { NitroEvent } from "nitro-renderer/src/core/events/NitroEvent";
+import { WebGL } from "nitro-renderer/src/nitro/utils/WebGL";
+import { LegacyExternalInterface } from "nitro-renderer/src/nitro/externalInterface/LegacyExternalInterface";
+import { NitroCommunicationDemoEvent } from "nitro-renderer/src/nitro/communication/demo/NitroCommunicationDemoEvent";
+import { NitroLocalizationEvent } from "nitro-renderer/src/nitro/localization/NitroLocalizationEvent";
+import { ConfigurationEvent } from "nitro-renderer/src/core/configuration/ConfigurationEvent";
+import { RoomEngineEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineEvent";
+import { Services } from "./services/Services";
 
 @Component({
 	components: {
@@ -28,11 +29,13 @@ export default class App extends Vue {
 	public isLocalizationReady: boolean = false;
 	public isAvatarRenderReady: boolean = false;
 	public isError: boolean = false;
-	private isReady: boolean = false;
+	public isReady: boolean = false;
 
-	public mounted(): void {
+	public created(): void {
 		console.log("here mounted");
+
 		this.onNitroEvent = this.onNitroEvent.bind(this);
+
 		this.init();
 	}
 
@@ -178,7 +181,10 @@ export default class App extends Vue {
 				return;
 			case NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED:
 				this.message = "Finishing Up";
+
 				Nitro.instance.init();
+
+				Vue.prototype.$services = Services.getInstance();
 
 				clearTimeout(this._connectionTimeout);
 

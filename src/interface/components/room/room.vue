@@ -9,45 +9,41 @@ import { Component, Vue } from "vue-property-decorator";
 
 import { AdjustmentFilter } from "@pixi/filter-adjustment";
 import { Container, Rectangle, Sprite, Texture } from "pixi.js";
-import { IConnection } from "@/client/core/communication/connections/IConnection";
-import { EventDispatcher } from "@/client/core/events/EventDispatcher";
-import { IEventDispatcher } from "@/client/core/events/IEventDispatcher";
-import { NitroEvent } from "@/client/core/events/NitroEvent";
-import { IAvatarRenderManager } from "@/client/nitro/avatar/IAvatarRenderManager";
-import { LegacyExternalInterface } from "@/client/nitro/externalInterface/LegacyExternalInterface";
-import { Nitro } from "@/client/nitro/Nitro";
-import { RoomEngineEvent } from "@/client/nitro/room/events/RoomEngineEvent";
-import { RoomEngineObjectEvent } from "@/client/nitro/room/events/RoomEngineObjectEvent";
-import { RoomEngineTriggerWidgetEvent } from "@/client/nitro/room/events/RoomEngineTriggerWidgetEvent";
-import { RoomZoomEvent } from "@/client/nitro/room/events/RoomZoomEvent";
-import { IRoomEngine } from "@/client/nitro/room/IRoomEngine";
-import { RoomObjectCategory } from "@/client/nitro/room/object/RoomObjectCategory";
-import { RoomObjectOperationType } from "@/client/nitro/room/object/RoomObjectOperationType";
-import { RoomObjectVariable } from "@/client/nitro/room/object/RoomObjectVariable";
-import { RoomVariableEnum } from "@/client/nitro/room/RoomVariableEnum";
-import { RoomControllerLevel } from "@/client/nitro/session/enum/RoomControllerLevel";
-import { IRoomSession } from "@/client/nitro/session/IRoomSession";
-import { IRoomSessionManager } from "@/client/nitro/session/IRoomSessionManager";
-import { ISessionDataManager } from "@/client/nitro/session/ISessionDataManager";
-import { IRoomWidgetHandler } from "@/client/nitro/ui/IRoomWidgetHandler";
-import { IRoomWidgetHandlerContainer } from "@/client/nitro/ui/IRoomWidgetHandlerContainer";
-import { MouseEventType } from "@/client/nitro/ui/MouseEventType";
-import { TouchEventType } from "@/client/nitro/ui/TouchEventType";
-import { RoomWidgetEnum } from "@/client/nitro/ui/widget/enums/RoomWidgetEnum";
-import { RoomWidgetUpdateEvent } from "@/client/nitro/ui/widget/events/RoomWidgetUpdateEvent";
-import { IRoomWidget } from "@/client/nitro/ui/widget/IRoomWidget";
-import { IRoomWidgetMessageListener } from "@/client/nitro/ui/widget/IRoomWidgetMessageListener";
-import { RoomWidgetMessage } from "@/client/nitro/ui/widget/messages/RoomWidgetMessage";
-import { IRoomObject } from "@/client/room/object/IRoomObject";
-import { ColorConverter } from "@/client/room/utils/ColorConverter";
-import { RoomGeometry } from "@/client/room/utils/RoomGeometry";
-import { RoomId } from "@/client/room/utils/RoomId";
-import { Vector3d } from "@/client/room/utils/Vector3d";
-import { RoomObjectType } from "@/client/nitro/room/object/RoomObjectType";
-import { RoomWidgetRoomEngineUpdateEvent } from "./widgets/events/RoomWidgetRoomEngineUpdateEvent";
-import { RoomWidgetRoomObjectUpdateEvent } from "./widgets/events/RoomWidgetRoomObjectUpdateEvent";
-import { RoomWidgetRoomViewUpdateEvent } from "./widgets/events/RoomWidgetRoomViewUpdateEvent";
-import { RoomWidgetFurniToWidgetMessage } from "./widgets/messages/RoomWidgetFurniToWidgetMessage";
+import { IConnection } from "nitro-renderer/src/core/communication/connections/IConnection";
+import { EventDispatcher } from "nitro-renderer/src/core/events/EventDispatcher";
+import { IEventDispatcher } from "nitro-renderer/src/core/events/IEventDispatcher";
+import { NitroEvent } from "nitro-renderer/src/core/events/NitroEvent";
+import { IAvatarRenderManager } from "nitro-renderer/src/nitro/avatar/IAvatarRenderManager";
+import { LegacyExternalInterface } from "nitro-renderer/src/nitro/externalInterface/LegacyExternalInterface";
+import { Nitro } from "nitro-renderer/src/nitro/Nitro";
+import { RoomEngineEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineEvent";
+import { RoomEngineObjectEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineObjectEvent";
+import { RoomEngineTriggerWidgetEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineTriggerWidgetEvent";
+import { RoomZoomEvent } from "nitro-renderer/src/nitro/room/events/RoomZoomEvent";
+import { IRoomEngine } from "nitro-renderer/src/nitro/room/IRoomEngine";
+import { RoomObjectCategory } from "nitro-renderer/src/nitro/room/object/RoomObjectCategory";
+import { RoomObjectOperationType } from "nitro-renderer/src/nitro/room/object/RoomObjectOperationType";
+import { RoomObjectVariable } from "nitro-renderer/src/nitro/room/object/RoomObjectVariable";
+import { RoomVariableEnum } from "nitro-renderer/src/nitro/room/RoomVariableEnum";
+import { RoomControllerLevel } from "nitro-renderer/src/nitro/session/enum/RoomControllerLevel";
+import { IRoomSession } from "nitro-renderer/src/nitro/session/IRoomSession";
+import { IRoomSessionManager } from "nitro-renderer/src/nitro/session/IRoomSessionManager";
+import { ISessionDataManager } from "nitro-renderer/src/nitro/session/ISessionDataManager";
+import { IRoomWidgetHandler } from "nitro-renderer/src/nitro/ui/IRoomWidgetHandler";
+import { IRoomWidgetHandlerContainer } from "nitro-renderer/src/nitro/ui/IRoomWidgetHandlerContainer";
+import { MouseEventType } from "nitro-renderer/src/nitro/ui/MouseEventType";
+import { TouchEventType } from "nitro-renderer/src/nitro/ui/TouchEventType";
+import { RoomWidgetEnum } from "nitro-renderer/src/nitro/ui/widget/enums/RoomWidgetEnum";
+import { RoomWidgetUpdateEvent } from "nitro-renderer/src/nitro/ui/widget/events/RoomWidgetUpdateEvent";
+import { IRoomWidget } from "nitro-renderer/src/nitro/ui/widget/IRoomWidget";
+import { IRoomWidgetMessageListener } from "nitro-renderer/src/nitro/ui/widget/IRoomWidgetMessageListener";
+import { RoomWidgetMessage } from "nitro-renderer/src/nitro/ui/widget/messages/RoomWidgetMessage";
+import { IRoomObject } from "nitro-renderer/src/room/object/IRoomObject";
+import { ColorConverter } from "nitro-renderer/src/room/utils/ColorConverter";
+import { RoomGeometry } from "nitro-renderer/src/room/utils/RoomGeometry";
+import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
+import { Vector3d } from "nitro-renderer/src/room/utils/Vector3d";
+import { RoomObjectType } from "nitro-renderer/src/nitro/room/object/RoomObjectType";
 
 interface vExtType extends Vue {
 	[k: string]: any;
@@ -88,7 +84,7 @@ export default class Room
 	private _lastScrollTime: number = 0;
 
 	$refs!: {
-		roomCanvas: vExtType;
+		roomCanvas: HTMLElement;
 	};
 
 	public mounted() {
@@ -229,7 +225,7 @@ export default class Room
 		window.onresize = this.onWindowResizeEvent.bind(this);
 		window.onmousewheel = this.onWindowMouseWheelEvent.bind(this);
 
-		this.$refs.roomCanvas.nativeElement.appendChild(canvas);
+		this.$refs.roomCanvas.appendChild(canvas);
 	}
 
 	private removeCanvas(): void {
@@ -393,6 +389,7 @@ export default class Room
 				Nitro.instance.width,
 				Nitro.instance.height
 			);
+			/*
 
 			this._events.dispatchEvent(
 				new RoomWidgetRoomViewUpdateEvent(
@@ -400,6 +397,8 @@ export default class Room
 					this.getRoomViewRect()
 				)
 			);
+
+			*/
 
 			this.setRoomBackground();
 
@@ -674,20 +673,24 @@ export default class Room
 
 		switch (event.type) {
 			case RoomEngineEvent.NORMAL_MODE:
+				/*
 				this._events.dispatchEvent(
 					new RoomWidgetRoomEngineUpdateEvent(
 						RoomWidgetRoomEngineUpdateEvent.RWREUE_NORMAL_MODE,
 						event.roomId
 					)
 				);
+				*/
 				return;
 			case RoomEngineEvent.GAME_MODE:
+				/*
 				this._events.dispatchEvent(
 					new RoomWidgetRoomEngineUpdateEvent(
 						RoomWidgetRoomEngineUpdateEvent.RWREUE_GAME_MODE,
 						event.roomId
 					)
 				);
+				*/
 				return;
 		}
 	}
@@ -698,205 +701,11 @@ export default class Room
 		const objectId = event.objectId;
 		const category = event.category;
 
-		let updateEvent: RoomWidgetRoomObjectUpdateEvent = null;
+		let updateEvent: any = null;
+		/*
 
-		switch (event.type) {
-			case RoomEngineObjectEvent.SELECTED:
-				if (!this.isFurnitureSelectionDisabled(event))
-					updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-						RoomWidgetRoomObjectUpdateEvent.OBJECT_SELECTED,
-						objectId,
-						category,
-						event.roomId
-					);
-
-				if (category == RoomObjectCategory.UNIT) {
-					const user = this._roomSession.userDataManager.getUserDataByIndex(
-						objectId
-					);
-					if (user && user.type == RoomObjectType.USER) {
-						//this._modToolsService.selectUser(user.webID, user.name);
-					}
-				}
-				break;
-			case RoomEngineObjectEvent.DESELECTED:
-				updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-					RoomWidgetRoomObjectUpdateEvent.OBJECT_DESELECTED,
-					objectId,
-					category,
-					event.roomId
-				);
-				break;
-			case RoomEngineObjectEvent.ADDED: {
-				let addedEventType: string = null;
-
-				switch (category) {
-					case RoomObjectCategory.FLOOR:
-					case RoomObjectCategory.WALL:
-						addedEventType =
-							RoomWidgetRoomObjectUpdateEvent.FURNI_ADDED;
-						break;
-					case RoomObjectCategory.UNIT:
-						addedEventType =
-							RoomWidgetRoomObjectUpdateEvent.USER_ADDED;
-						break;
-				}
-
-				if (addedEventType)
-					updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-						addedEventType,
-						objectId,
-						category,
-						event.roomId
-					);
-				break;
-			}
-			case RoomEngineObjectEvent.REMOVED: {
-				let removedEventType: string = null;
-
-				switch (category) {
-					case RoomObjectCategory.FLOOR:
-					case RoomObjectCategory.WALL:
-						removedEventType =
-							RoomWidgetRoomObjectUpdateEvent.FURNI_REMOVED;
-						break;
-					case RoomObjectCategory.UNIT:
-						removedEventType =
-							RoomWidgetRoomObjectUpdateEvent.USER_REMOVED;
-						break;
-				}
-
-				if (removedEventType)
-					updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-						removedEventType,
-						objectId,
-						category,
-						event.roomId
-					);
-				break;
-			}
-			case RoomEngineObjectEvent.MOUSE_ENTER:
-				updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-					RoomWidgetRoomObjectUpdateEvent.OBJECT_ROLL_OVER,
-					objectId,
-					category,
-					event.roomId
-				);
-				break;
-			case RoomEngineObjectEvent.MOUSE_LEAVE:
-				updateEvent = new RoomWidgetRoomObjectUpdateEvent(
-					RoomWidgetRoomObjectUpdateEvent.OBJECT_ROLL_OUT,
-					objectId,
-					category,
-					event.roomId
-				);
-				break;
-			case RoomEngineObjectEvent.REQUEST_MOVE:
-				if (
-					this.checkFurniManipulationRights(
-						event.roomId,
-						objectId,
-						category
-					)
-				) {
-					Nitro.instance.roomEngine.processRoomObjectOperation(
-						objectId,
-						category,
-						RoomObjectOperationType.OBJECT_MOVE
-					);
-				}
-				break;
-			case RoomEngineObjectEvent.REQUEST_ROTATE:
-				if (
-					this.checkFurniManipulationRights(
-						event.roomId,
-						objectId,
-						category
-					)
-				) {
-					Nitro.instance.roomEngine.processRoomObjectOperation(
-						objectId,
-						category,
-						RoomObjectOperationType.OBJECT_ROTATE_POSITIVE
-					);
-				}
-				break;
-			case RoomEngineTriggerWidgetEvent.REQUEST_STICKIE:
-				this.processWidgetMessage(
-					new RoomWidgetFurniToWidgetMessage(
-						RoomWidgetFurniToWidgetMessage.REQUEST_STICKIE,
-						objectId,
-						category,
-						event.roomId
-					)
-				);
-				break;
-			case RoomEngineTriggerWidgetEvent.REQUEST_TROPHY:
-				this.processWidgetMessage(
-					new RoomWidgetFurniToWidgetMessage(
-						RoomWidgetFurniToWidgetMessage.REQUEST_TROPHY,
-						objectId,
-						category,
-						event.roomId
-					)
-				);
-				break;
-			case RoomEngineTriggerWidgetEvent.REQUEST_CREDITFURNI:
-				this.processWidgetMessage(
-					new RoomWidgetFurniToWidgetMessage(
-						RoomWidgetFurniToWidgetMessage.REQUEST_CREDITFURNI,
-						objectId,
-						category,
-						event.roomId
-					)
-				);
-				break;
-			case RoomEngineTriggerWidgetEvent.REQUEST_DIMMER:
-				this.processWidgetMessage(
-					new RoomWidgetFurniToWidgetMessage(
-						RoomWidgetFurniToWidgetMessage.REQUEST_DIMMER,
-						objectId,
-						category,
-						event.roomId
-					)
-				);
-				break;
-			case RoomEngineTriggerWidgetEvent.REQUEST_PRESENT:
-				this.processWidgetMessage(
-					new RoomWidgetFurniToWidgetMessage(
-						RoomWidgetFurniToWidgetMessage.REQUEST_PRESENT,
-						objectId,
-						category,
-						event.roomId
-					)
-				);
-				break;
-			//case RoomEngineUseProductEvent.ROSM_USE_PRODUCT_FROM_INVENTORY:
-			//case RoomEngineUseProductEvent.ROSM_USE_PRODUCT_FROM_ROOM:
-			case RoomEngineTriggerWidgetEvent.OPEN_WIDGET:
-			case RoomEngineTriggerWidgetEvent.CLOSE_WIDGET:
-			case RoomEngineTriggerWidgetEvent.OPEN_FURNI_CONTEXT_MENU:
-			case RoomEngineTriggerWidgetEvent.CLOSE_FURNI_CONTEXT_MENU:
-			case RoomEngineTriggerWidgetEvent.REMOVE_DIMMER:
-			case RoomEngineTriggerWidgetEvent.REQUEST_MANNEQUIN:
-			case RoomEngineTriggerWidgetEvent.REQUEST_BACKGROUND_COLOR:
-			case RoomEngineTriggerWidgetEvent.REQUEST_FRIEND_FURNITURE_ENGRAVING:
-			case RoomEngineTriggerWidgetEvent.REQUEST_HIGH_SCORE_DISPLAY:
-			case RoomEngineTriggerWidgetEvent.REQUEST_HIDE_HIGH_SCORE_DISPLAY:
-			case RoomEngineTriggerWidgetEvent.REQUEST_INTERNAL_LINK:
-			case RoomEngineTriggerWidgetEvent.REQUEST_ROOM_LINK:
-				this.processEvent(event);
-				break;
-		}
-
-		if (updateEvent) {
-			let dispatchEvent = true;
-
-			if (updateEvent instanceof RoomWidgetRoomObjectUpdateEvent)
-				dispatchEvent = !RoomId.isRoomPreviewerId(updateEvent.roomId);
-
-			if (dispatchEvent) this._events.dispatchEvent(updateEvent);
-		}
+		
+		*/
 	}
 
 	private isFurnitureSelectionDisabled(k: RoomEngineObjectEvent): boolean {
@@ -1079,7 +888,7 @@ export default class Room
 	}
 
 	public getRoomViewRect(): Rectangle {
-		const bounds = this.$refs.roomCanvas.nativeElement.getBoundingClientRect();
+		const bounds = this.$refs.roomCanvas.getBoundingClientRect();
 
 		return new Rectangle(
 			bounds.x || 0,

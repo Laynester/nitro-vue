@@ -3,58 +3,57 @@
 <script lang="ts">
 import { Component, Prop, Ref, Vue } from "vue-property-decorator";
 
-import { ILinkEventTracker } from "@/client/core/events/ILinkEventTracker";
-import { Nitro } from "@/client/nitro/Nitro";
-import { RoomBackgroundColorEvent } from "@/client/nitro/room/events/RoomBackgroundColorEvent";
-import { RoomEngineDimmerStateEvent } from "@/client/nitro/room/events/RoomEngineDimmerStateEvent";
-import { RoomEngineEvent } from "@/client/nitro/room/events/RoomEngineEvent";
-import { RoomEngineObjectEvent } from "@/client/nitro/room/events/RoomEngineObjectEvent";
-import { RoomEngineTriggerWidgetEvent } from "@/client/nitro/room/events/RoomEngineTriggerWidgetEvent";
-import { RoomObjectHSLColorEnabledEvent } from "@/client/nitro/room/events/RoomObjectHSLColorEnabledEvent";
-import { RoomObjectWidgetRequestEvent } from "@/client/nitro/room/events/RoomObjectWidgetRequestEvent";
-import { RoomZoomEvent } from "@/client/nitro/room/events/RoomZoomEvent";
-import { RoomSessionChatEvent } from "@/client/nitro/session/events/RoomSessionChatEvent";
-import { RoomSessionDanceEvent } from "@/client/nitro/session/events/RoomSessionDanceEvent";
-import { RoomSessionDimmerPresetsEvent } from "@/client/nitro/session/events/RoomSessionDimmerPresetsEvent";
-import { RoomSessionDoorbellEvent } from "@/client/nitro/session/events/RoomSessionDoorbellEvent";
-import { RoomSessionErrorMessageEvent } from "@/client/nitro/session/events/RoomSessionErrorMessageEvent";
-import { RoomSessionEvent } from "@/client/nitro/session/events/RoomSessionEvent";
-import { RoomSessionFriendRequestEvent } from "@/client/nitro/session/events/RoomSessionFriendRequestEvent";
-import { RoomSessionPresentEvent } from "@/client/nitro/session/events/RoomSessionPresentEvent";
-import { RoomSessionUserBadgesEvent } from "@/client/nitro/session/events/RoomSessionUserBadgesEvent";
-import { RoomWidgetEnum } from "@/client/nitro/ui/widget/enums/RoomWidgetEnum";
-import { HabboWebTools } from "@/client/nitro/utils/HabboWebTools";
-import { RoomId } from "@/client/room/utils/RoomId";
-
-interface vExtType extends Vue {
-	[k: string]: any;
-}
+import { ILinkEventTracker } from "nitro-renderer/src/core/events/ILinkEventTracker";
+import { Nitro } from "nitro-renderer/src/nitro/Nitro";
+import { RoomBackgroundColorEvent } from "nitro-renderer/src/nitro/room/events/RoomBackgroundColorEvent";
+import { RoomEngineDimmerStateEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineDimmerStateEvent";
+import { RoomEngineEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineEvent";
+import { RoomEngineObjectEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineObjectEvent";
+import { RoomEngineTriggerWidgetEvent } from "nitro-renderer/src/nitro/room/events/RoomEngineTriggerWidgetEvent";
+import { RoomObjectHSLColorEnabledEvent } from "nitro-renderer/src/nitro/room/events/RoomObjectHSLColorEnabledEvent";
+import { RoomObjectWidgetRequestEvent } from "nitro-renderer/src/nitro/room/events/RoomObjectWidgetRequestEvent";
+import { RoomZoomEvent } from "nitro-renderer/src/nitro/room/events/RoomZoomEvent";
+import { RoomSessionChatEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionChatEvent";
+import { RoomSessionDanceEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionDanceEvent";
+import { RoomSessionDimmerPresetsEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionDimmerPresetsEvent";
+import { RoomSessionDoorbellEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionDoorbellEvent";
+import { RoomSessionErrorMessageEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionErrorMessageEvent";
+import { RoomSessionEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionEvent";
+import { RoomSessionFriendRequestEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionFriendRequestEvent";
+import { RoomSessionPresentEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionPresentEvent";
+import { RoomSessionUserBadgesEvent } from "nitro-renderer/src/nitro/session/events/RoomSessionUserBadgesEvent";
+import { RoomWidgetEnum } from "nitro-renderer/src/nitro/ui/widget/enums/RoomWidgetEnum";
+import { HabboWebTools } from "nitro-renderer/src/nitro/utils/HabboWebTools";
+import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
+import Room from "../room/room.vue";
+import Navigator from "../navigator/components/main/main.vue";
+import { Services } from "../../services/Services";
 
 @Component({
 	components: {
-		Room: () => import("../room/room.vue"),
+		Room,
+		Navigator,
 	},
 })
 export default class App extends Vue implements ILinkEventTracker {
-	private ready: boolean = false;
-
 	$refs!: {
-		room: vExtType;
+		room: Room;
 	};
 
 	private _landingViewVisible: boolean = true;
 
-	public created(): void {
+	public mounted(): void {
 		this.onRoomEngineEvent = this.onRoomEngineEvent.bind(this);
 		this.onInterstitialEvent = this.onInterstitialEvent.bind(this);
 		this.onRoomEngineObjectEvent = this.onRoomEngineObjectEvent.bind(this);
 		this.onRoomSessionEvent = this.onRoomSessionEvent.bind(this);
 		this.onRoomErrorEvent = this.onRoomErrorEvent.bind(this);
-		//Nitro.instance.addLinkEventTracker(this);
+		Nitro.instance.addLinkEventTracker(this);
 
 		this.init();
 
-		this.ready = true;
+		console.log("here mounterd 32432");
+
 		Nitro.instance.communication.connection.onReady();
 	}
 
@@ -297,15 +296,12 @@ export default class App extends Vue implements ILinkEventTracker {
 				this.onRoomErrorEvent
 			);
 		}
-		console.log(Nitro.instance.roomEngine.events);
 	}
 
 	private onRoomEngineEvent(event: RoomEngineEvent): void {
-		console.log("room");
 		if (!event) return;
-		console.log("here3");
+
 		if (RoomId.isRoomPreviewerId(event.roomId)) return;
-		console.log("here4");
 
 		const session = Nitro.instance.roomSessionManager.getSession(
 			event.roomId
@@ -473,7 +469,6 @@ export default class App extends Vue implements ILinkEventTracker {
 	}
 
 	private onInterstitialEvent(event: RoomEngineEvent): void {
-		console.log("int");
 		if (!event) return;
 
 		if (
@@ -490,7 +485,6 @@ export default class App extends Vue implements ILinkEventTracker {
 	}
 
 	private onRoomErrorEvent(event: RoomSessionEvent): void {
-		console.log("roomerror");
 		if (!event) return;
 
 		let errorMessage: string;
@@ -542,7 +536,6 @@ export default class App extends Vue implements ILinkEventTracker {
 	}
 
 	private onRoomSessionEvent(event: RoomSessionEvent): void {
-		console.log("roomsession");
 		if (!event) return;
 
 		switch (event.type) {
