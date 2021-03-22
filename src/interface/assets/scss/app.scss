@@ -3,6 +3,7 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities";
 
 html,
 body {
@@ -17,6 +18,11 @@ body {
     image-rendering: -moz-crisp-edges;
 }
 
+* {
+    box-sizing: border-box;
+    outline:none;
+}
+
 
 #nitro {
     width: 100%;
@@ -27,3 +33,9 @@ body {
         overflow: hidden;
     }
 }
+
+@import './borders.scss';
+@import './frames.scss';
+@import './frame-headers.scss';
+
+@import '../../components/index.scss';

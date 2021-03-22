@@ -27,8 +27,8 @@ import { HabboWebTools } from "nitro-renderer/src/nitro/utils/HabboWebTools";
 import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
 import Room from "../room/room.vue";
 import Navigator from "../navigator/components/main/main.vue";
-import { Services } from "../../services/Services";
 import ChatInput from "../room/widgets/ChatInput/ChatInput.vue";
+import RoomChat from "../room/widgets/RoomChat/RoomChat.vue";
 @Component({
 	components: {
 		Room,
@@ -313,6 +313,11 @@ export default class App extends Vue implements ILinkEventTracker {
 					this.$refs.room.prepareRoom(session);
 
 					Nitro.instance.roomEngine.setActiveRoomId(event.roomId);
+
+					this.$refs.room.createWidget(
+						RoomWidgetEnum.CHAT_WIDGET,
+						RoomChat
+					);
 
 					if (!this.$refs.room.roomSession.isSpectator) {
 						this.$refs.room.createWidget(

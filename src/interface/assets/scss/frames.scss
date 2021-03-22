@@ -1,0 +1,36 @@
+.nitro-frame {
+    position: relative;
+    &[data-style="0"] {
+        border-image-source: url('/assets/images/skin-0/volter-frame.png');
+        border-image-slice: 8 fill;
+        border-image-width: 8px;
+        border-image-repeat: repeat repeat;
+        padding:6px;
+        background-image: none !important;
+
+        &:before {
+            content:'';
+            position: absolute;
+            left:1px;right:0;bottom:0;top:1px;
+            margin-right:2px;
+            margin-bottom:2px;
+            border-image-source: url('/assets/images/skin-0/volter-frame-overlay.png');
+            border-image-slice: 8 fill;
+            border-image-width: 8px;
+            border-image-repeat: repeat repeat;   
+        }
+    }
+
+    &[data-style="3"] {
+        border-image-source: url('/assets/images/skin-3/ubuntu-frame.png');
+        border-image-slice: 33 7 8 7 fill;
+        border-image-width: 33px 7px 8px 7px;
+        border-image-repeat: repeat repeat;
+    }
+
+
+    &[data-style="0"],
+    &[data-style="3"] {
+        background-image: none !important;
+    }
+}

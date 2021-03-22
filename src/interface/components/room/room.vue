@@ -1,7 +1,44 @@
 <template>
-	<div class="nitro-room-component">
+	<div class="room-component" ref="roomWidgets">
 		<div ref="roomCanvas" class="room-view" />
-		<div class="room-widgets" ref="roomWidgets" />
+		<div class="mx-2 position-absolute" style="z-index: 9000; top: 0">
+			<div v-colourizer="['frame|3']">
+				<div
+					v-colourizer="[
+						'frame-header|3',
+						'skin-3/ubuntu-frame-header.png',
+						'#3E98B8',
+					]"
+				>
+					hello 123
+				</div>
+				<div class="p-1">test</div>
+			</div>
+			<div v-colourizer="['frame|3']">
+				<div
+					v-colourizer="[
+						'frame-header|3',
+						'skin-3/ubuntu-frame-header.png',
+						'#3E98B8',
+					]"
+				>
+					hello 123
+				</div>
+				<div class="p-1">test</div>
+			</div>
+			<div v-colourizer="['frame|3']">
+				<div
+					v-colourizer="[
+						'frame-header|3',
+						'skin-3/ubuntu-frame-header.png',
+						'#3E98B8',
+					]"
+				>
+					hello 123
+				</div>
+				<div class="p-1">test</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -46,6 +83,7 @@ import { RoomId } from "nitro-renderer/src/room/utils/RoomId";
 import { Vector3d } from "nitro-renderer/src/room/utils/Vector3d";
 import { RoomObjectType } from "nitro-renderer/src/nitro/room/object/RoomObjectType";
 import { ChatInputHandler } from "./widgets/handlers/ChatInputHandler";
+import { ChatWidgetHandler } from "./widgets/handlers/ChatWidgetHandler";
 import { RoomWidgetRoomViewUpdateEvent } from "./widgets/events/RoomWidgetRoomViewUpdateEvent";
 
 @Component({})
@@ -462,6 +500,16 @@ export default class Room
 				sendSizeUpdate = true;
 				widgetHandler = new ChatInputHandler();
 				break;
+			case RoomWidgetEnum.CHAT_WIDGET: {
+				sendSizeUpdate = true;
+
+				const handler = new ChatWidgetHandler();
+
+				handler.connection = Nitro.instance.communication.connection;
+
+				widgetHandler = handler;
+				break;
+			}
 		}
 		if (widgetHandler) {
 			const messageTypes = widgetHandler.messageTypes;

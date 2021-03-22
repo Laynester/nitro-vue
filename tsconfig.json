@@ -3,7 +3,7 @@
   "compilerOptions": {
     "noImplicitUseStrict": true,
     "baseUrl": ".",
-    "outDir": "./public/",
+    "outDir": "./dist/",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -29,7 +29,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/vue-types.d.ts"
+    "src/vue-types.d.ts",
   ],
   "exclude": [
     "node_modules",

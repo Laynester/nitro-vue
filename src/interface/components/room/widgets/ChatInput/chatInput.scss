@@ -1,0 +1,22 @@
+.room-chat-input {
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    width:500px;
+    margin:auto;
+
+    .chat-input-container {
+        width: 100%;
+        font-size: 16px;
+        display: flex;
+    
+        .chat-input {
+            width: 100%;
+            background:transparent;
+            border:0;
+            font-size: inherit;
+            padding:5px;
+        }
+    }
+}

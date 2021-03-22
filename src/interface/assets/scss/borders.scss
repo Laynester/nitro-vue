@@ -1,0 +1,23 @@
+.nitro-border {
+    &[data-style="0"] {
+        border-image-source: url('/assets/images/borders/border-0.png');
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+        border-image-repeat: repeat repeat;
+    }
+
+    &[data-style="1"] {
+        border-image-source: url('/assets/images/borders/border-1.png');
+        border-image-slice: 7 fill;
+        border-image-width: 7px;
+        border-image-repeat: repeat repeat;
+    }
+
+    &[data-style="2"] {
+        border-image-source: url('/assets/images/borders/border-2.png');
+        border-image-slice: 7 fill;
+        border-image-width: 7px;
+        border-image-repeat: repeat repeat;
+        margin:2px;
+    }
+}
