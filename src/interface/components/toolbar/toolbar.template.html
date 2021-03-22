@@ -1,0 +1,20 @@
+<div v-colourizer="['frame|0','skin-0/volter-frame.png','#696969']"
+    class="nitro-toolbar d-flex flex-column justify-content-between">
+    <div class="nitro-frame-content">
+        <div class="d-flex flex-column justify-content-center toolbar-group">
+            <ToolbarIcon type="help" :frames="6" />
+            <ToolbarIcon type="home" :frames="7" />
+            <ToolbarIcon type="exit" :frames="2" />
+        </div>
+        <div class="d-flex flex-column justify-content-center toolbar-group">
+            <ToolbarIcon type="navigator" :frames="4" />
+            <ToolbarIcon type="catalogue" :frames="7" />
+            <ToolbarIcon type="console" :frames="5" />
+            <ToolbarIcon type="messenger" :frames="1" />
+            <ToolbarIcon type="messenger-unread" :frames="1" />
+        </div>
+        <div class="d-flex flex-column justify-content-center toolbar-group" @click="handleClick('exit')">
+            test
+        </div>
+    </div>
+</div>

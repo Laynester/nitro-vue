@@ -1,0 +1,8 @@
+<div class="nitro-hotelview-component" :style="`background-color:${backgroundColour}`">
+    <div v-if="background" class="background position-absolute" :style="`background-image:url(${background})`"></div>
+    <img v-if="sun" class="sun position-absolute" :src="sun" />
+    <img v-if="drape" class="drape position-absolute" :src="drape" />
+    <img v-if="left" class="left position-absolute" :src="left" />
+    <img v-if="rightRepeat" class="rightRepeat position-absolute" :src="rightRepeat" />
+    <img v-if="right" class="right position-absolute" :src="right" />
+</div>

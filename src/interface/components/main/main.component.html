@@ -1,4 +1,6 @@
 <div id="main">
+    <Landing v-if="landingViewVisible" />
+    <ToolBar />
     <Navigator />
     <Room ref="room" />
 </div>

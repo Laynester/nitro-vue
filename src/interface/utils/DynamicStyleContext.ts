@@ -105,9 +105,9 @@ export class DynamicStyleContext
         {
             if (!(data.data[i] == 0 && data.data[i + 1] == 0 && data.data[i + 2] == 0))
             {
-                data.data[i] =  this.RGB.r - (255 - data.data[i]);
-                data.data[i + 1] = this.RGB.g - (255 - data.data[i + 1]);
-                data.data[i + 2] = this.RGB.b - (255 - data.data[i + 2]);
+                data.data[i] =  this.RGB.r - (data.data[i] < 255 ? (200 - data.data[i]) : 0);
+                data.data[i + 1] = this.RGB.g - (data.data[i + 1] < 255 ? (200 - data.data[i + 1]) : 0);
+                data.data[i + 2] = this.RGB.b - (data.data[i + 2] < 255 ? (200 - data.data[i + 2]) : 0);
                 if (data.data[i + 3] && this.opacity) data.data[i + 3] = this.opacity;
             } else if (data.data[i + 3] && this.opacity) data.data[i + 3] = (255 - this.opacity);
         }

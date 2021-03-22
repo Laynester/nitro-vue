@@ -29,8 +29,13 @@ import Room from "../room/room.vue";
 import Navigator from "../navigator/components/main/main.vue";
 import ChatInput from "../room/widgets/ChatInput/ChatInput.vue";
 import RoomChat from "../room/widgets/RoomChat/RoomChat.vue";
+import ToolBar from "../toolbar/toolbar.vue";
+import Landing from "./landing/landing.vue";
+
 @Component({
 	components: {
+		Landing,
+		ToolBar,
 		Room,
 		Navigator,
 	},
@@ -40,7 +45,7 @@ export default class App extends Vue implements ILinkEventTracker {
 		room: Room;
 	};
 
-	private _landingViewVisible: boolean = true;
+	public landingViewVisible: boolean = true;
 
 	public mounted(): void {
 		this.onRoomEngineEvent = this.onRoomEngineEvent.bind(this);
@@ -548,7 +553,7 @@ export default class App extends Vue implements ILinkEventTracker {
 
 		switch (event.type) {
 			case RoomSessionEvent.CREATED:
-				this._landingViewVisible = false;
+				this.landingViewVisible = false;
 
 				Nitro.instance.roomSessionManager.startSession(event.session);
 				return;
@@ -559,7 +564,7 @@ export default class App extends Vue implements ILinkEventTracker {
 			case RoomSessionEvent.ENDED:
 				if (this.$refs.room) this.$refs.room.endRoom();
 
-				this._landingViewVisible = event.openLandingView;
+				this.landingViewVisible = event.openLandingView;
 
 				return;
 			default:

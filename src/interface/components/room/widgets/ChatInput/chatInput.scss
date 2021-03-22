@@ -5,6 +5,7 @@
     right:0;
     width:500px;
     margin:auto;
+    z-index: $chatinput-zindex;
 
     .chat-input-container {
         width: 100%;

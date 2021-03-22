@@ -1,0 +1,167 @@
+.nitro-toolbar {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% + 15px);
+    position: absolute;
+    top:-8px;
+    left:-3px;
+    bottom:0;
+    z-index: $toolbar-zindex;
+
+    .nitro-frame-content {
+        padding:5px;
+
+        .toolbar-group {
+            margin-top:5px;
+
+            > div:not(:last-child) {
+                margin-bottom:5px;
+            }
+        }
+
+        .toolbar-help {
+            background-image: url('../../assets/images/toolbar/help.png');
+            background-position: -0 -0;
+            width:24px;
+            height:40px;
+
+            &[data-frame="2"] {
+                background-position: -24px -0;
+            }
+            &[data-frame="3"] {
+                background-position: -120px -0;
+            }
+            &[data-frame="4"] {
+                background-position: -96px -0;
+            }
+            &[data-frame="5"] {
+                background-position: -48px -0;
+            }
+            &[data-frame="6"] {
+                background-position: -72px -0;
+            }
+        }
+    
+        .toolbar-home {
+            background-image: url('../../assets/images/toolbar/homeroom.png');
+            background-position: -190px 4px;
+            height: 33px;
+            width: 38px;
+            &[data-frame="2"] {
+                background-position: -152px -0;
+            }
+            &[data-frame="3"] {
+                background-position: -114px -0;
+            }
+            &[data-frame="4"] {
+                background-position: -76px -0;
+            }
+            &[data-frame="5"] {
+                background-position: -0 -0;
+            }
+            &[data-frame="6"] {
+                background-position: -38px -0px;
+            }
+        }
+
+        .toolbar-exit {
+            background-image: url('../../assets/images/toolbar/exit.png');
+            width:34px;
+            height:36px;
+            background-position: 0px -0;
+
+            &[data-frame="2"] {
+                background-position: -35px 0;
+            }
+        }
+
+        .toolbar-navigator {
+            background-image: url('../../assets/images/toolbar/navigator.png');
+            width:32px;
+            height:60px;
+            background-position: -96px -0;
+
+            &[data-style="2"] {
+                background-position: -0 -0;
+            }
+            &[data-frame="3"] {
+                background-position: -32px -0;
+            }
+            &[data-frame="4"] {
+                background-position: -64px -0;
+            }
+        }
+
+        .toolbar-catalogue {
+            background-image: url('../../assets/images/toolbar/catalogue.png');
+            width:42px;
+            height:56px;
+            background-position: -0 -0;
+
+            &[data-frame="2"] {
+                background-position: -168px -0;
+            }
+            &[data-frame="3"] {
+                background-position: -252px -0;
+            }
+            &[data-frame="4"] {
+                background-position: -42px -0;
+            }
+            &[data-frame="5"] {
+                background-position: -210px -0;
+            }
+            &[data-frame="6"] {
+                background-position: -126px -0;
+            }
+            &[data-frame="7"] {
+                background-position: -84px -0;
+            }
+        }
+
+        .toolbar-console {
+            background-image: url('../../assets/images/toolbar/console.png');
+            width:32px;
+            height:42px;
+            background-position: -64px -0;
+
+            &[data-frame="2"] {
+                background-position: -0 -0;
+            }
+            &[data-frame="3"] {
+                background-position: -96px -0;
+            }
+            &[data-frame="4"] {
+                background-position: -128px -0;
+            }
+            &[data-frame="5"] {
+                background-position: -32px -0;
+            }
+        }
+
+        .toolbar-messenger {
+            background-image: url('../../assets/images/toolbar/messenger.png');
+            width:26px;
+            height: 31px;
+        }
+        .toolbar-messenger-unread {
+            background-image: url('../../assets/images/toolbar/messenger_unread.png');
+            width:26px;
+            height: 31px;
+            animation-name: unreadBlink;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+    }
+}
+
+@keyframes unreadBlink {
+    0% {
+        background-image: url('../../assets/images/toolbar/messenger_unread.png');
+    }
+    50% {
+        background-image: url('../../assets/images/toolbar/messenger_unread_blink.png');
+    }
+    100% {
+        background-image: url('../../assets/images/toolbar/messenger_unread.png');
+    }
+}

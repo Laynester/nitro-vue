@@ -4,10 +4,13 @@
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/type";
+@import './utils.scss';
+@import './fonts.scss';
 
 html,
 body {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Ubuntu';
     margin: 0;
     padding: 0;
     width: 100%;
@@ -16,6 +19,7 @@ body {
     user-select: none;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
+    background:#000;
 }
 
 * {
@@ -37,5 +41,6 @@ body {
 @import './borders.scss';
 @import './frames.scss';
 @import './frame-headers.scss';
+@import './zIndexes.scss';
 
 @import '../../components/index.scss';

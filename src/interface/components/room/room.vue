@@ -1,44 +1,6 @@
 <template>
 	<div class="room-component" ref="roomWidgets">
 		<div ref="roomCanvas" class="room-view" />
-		<div class="mx-2 position-absolute" style="z-index: 9000; top: 0">
-			<div v-colourizer="['frame|3']">
-				<div
-					v-colourizer="[
-						'frame-header|3',
-						'skin-3/ubuntu-frame-header.png',
-						'#3E98B8',
-					]"
-				>
-					hello 123
-				</div>
-				<div class="p-1">test</div>
-			</div>
-			<div v-colourizer="['frame|3']">
-				<div
-					v-colourizer="[
-						'frame-header|3',
-						'skin-3/ubuntu-frame-header.png',
-						'#3E98B8',
-					]"
-				>
-					hello 123
-				</div>
-				<div class="p-1">test</div>
-			</div>
-			<div v-colourizer="['frame|3']">
-				<div
-					v-colourizer="[
-						'frame-header|3',
-						'skin-3/ubuntu-frame-header.png',
-						'#3E98B8',
-					]"
-				>
-					hello 123
-				</div>
-				<div class="p-1">test</div>
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -222,6 +184,12 @@ export default class Room
 			this._resizeTimer = null;
 		}
 
+		for (const widget of this._widgets.values()) {
+			if (!widget) continue;
+
+			widget.remove();
+		}
+
 		for (const handler of this._handlers) handler && handler.dispose();
 
 		this._roomColorAdjustor = null;
@@ -235,6 +203,7 @@ export default class Room
 		this.COLOR_ADJUSTMENT.blue = 1;
 
 		this._handlers = [];
+		this._widgets.clear();
 		this._widgetHandlerMessageMap.clear();
 		this._widgetHandlerEventMap.clear();
 		this._events.removeAllListeners();

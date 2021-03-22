@@ -17,7 +17,8 @@
             border-image-source: url('/assets/images/skin-0/volter-frame-overlay.png');
             border-image-slice: 8 fill;
             border-image-width: 8px;
-            border-image-repeat: repeat repeat;   
+            border-image-repeat: repeat repeat; 
+            z-index: 1;  
         }
     }
 
@@ -33,4 +34,9 @@
     &[data-style="3"] {
         background-image: none !important;
     }
+}
+
+
+.nitro-frame-content {
+    z-index: 2;
 }
