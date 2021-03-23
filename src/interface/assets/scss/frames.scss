@@ -5,8 +5,11 @@
         border-image-slice: 8 fill;
         border-image-width: 8px;
         border-image-repeat: repeat repeat;
-        padding:6px;
+        padding:8px;
         background-image: none !important;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
 
         &:before {
             content:'';
@@ -20,21 +23,33 @@
             border-image-repeat: repeat repeat; 
             z-index: 1;  
         }
+
         > div {
+            z-index: 3;
+        }
+
+        .frame-resize {
+            background-position: bottom right;
+            background-repeat: no-repeat;
+            background-image: url('/assets/images/skin-0/volter-resize.png');
+            width:20px;
+            height:20px;
+            bottom:0;
+            right:0;
+            position: absolute;
             z-index: 2;
         }
     }
 
-    &[data-style="3"] {
+    &[data-style="1"] {
         border-image-source: url('/assets/images/skin-3/ubuntu-frame.png');
         border-image-slice: 33 7 8 7 fill;
         border-image-width: 33px 7px 8px 7px;
         border-image-repeat: repeat repeat;
     }
 
-
     &[data-style="0"],
-    &[data-style="3"] {
+    &[data-style="1"] {
         background-image: none !important;
     }
 }

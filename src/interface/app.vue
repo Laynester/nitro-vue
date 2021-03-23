@@ -182,7 +182,7 @@ export default class App extends Vue {
 
 				Nitro.instance.init();
 
-				Vue.prototype.$services = Services.getInstance();
+				Vue.prototype.$services = Services.instance();
 
 				clearTimeout(this._connectionTimeout);
 

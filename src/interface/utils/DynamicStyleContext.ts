@@ -53,7 +53,7 @@ export class DynamicStyleContext
     {
         const bg = `url(${DynamicStyle.getInstance().images.get(this.namespace)})`;
         if(!this.classList[0].includes('header-bg')) this.element.style.borderImageSource = bg;
-        if(this.classList[0] !== "border") this.element.style.backgroundImage = bg;
+        if(this.classList[0].includes('header-bg')) this.element.style.backgroundImage = bg;
     }
 
     public generateColours(): void

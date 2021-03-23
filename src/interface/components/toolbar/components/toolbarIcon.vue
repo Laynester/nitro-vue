@@ -56,5 +56,9 @@ export default class ToolbarIcon extends Vue {
 
 		this.ticker = setTimeout(this.subtract, this.tickerSpeed);
 	}
+
+	public click(): void {
+		this.$services.settingService.handleClick(this.type);
+	}
 }
 </script>

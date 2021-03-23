@@ -1,0 +1,42 @@
+.verticalList {
+    padding-right:5px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 17px;
+    }
+    &::-webkit-scrollbar-track {
+        background-image: url('/assets/images/scrollbars/volter-track.png');
+    }
+    &::-webkit-scrollbar-thumb {
+        background-image: url('/assets/images/scrollbars/volter-thumb-top.png'),
+            url('/assets/images/scrollbars/volter-thumb-bottom.png'),
+            url('/assets/images/scrollbars/volter-thumb-repeat.png');
+        background-repeat: no-repeat, no-repeat, repeat-y;
+        background-position: 0 0, bottom, 0 7px;
+        &:active {
+            background-image: url('/assets/images/scrollbars/volter-thumb-top-active.png'),
+            url('/assets/images/scrollbars/volter-thumb-bottom-active.png'),
+            url('/assets/images/scrollbars/volter-thumb-repeat-active.png');
+        }
+    }
+    &::-webkit-scrollbar-button:vertical:start:decrement {
+        background-image: url('/assets/images/scrollbars/volter-buttons.png');
+        height:16px;
+        display: block;
+
+        &:active {
+            background-image: url('/assets/images/scrollbars/volter-buttons-active.png');
+        }
+    }
+
+    &::-webkit-scrollbar-button:vertical:end:increment {
+        background-image: url('/assets/images/scrollbars/volter-buttons.png');
+        background-position-y: 16px;
+        height:16px;
+        display: block;
+        &:active {
+            background-image: url('/assets/images/scrollbars/volter-buttons-active.png');
+        }
+    }
+}

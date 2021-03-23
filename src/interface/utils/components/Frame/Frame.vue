@@ -8,6 +8,7 @@ import { DynamicStyle } from "../../DynamicStyle";
 export default class Frame extends Vue {
 	$refs: {
 		frameComponent: HTMLElement;
+		handle: HTMLElement;
 		frameHeader: HTMLElement;
 		frameHeaderText: HTMLElement;
 	};
@@ -20,17 +21,55 @@ export default class Frame extends Vue {
 
 	@Prop() private type: number;
 
+	@Prop() public closeable: boolean;
+
+	@Prop() private closeCallback: Function;
+
+	@Prop() private resizable: boolean;
+
+	private static dis: HTMLElement[];
+
+	public data() {
+		return {
+			resize: false,
+			draggable: {
+				handle: null,
+			},
+		};
+	}
+
 	public mounted(): void {
+		Frame.dis = [];
+
+		if (this.resizable !== undefined) this.$data.resize = this.resizable;
+
+		this.$data.draggable.onDragStart = (e) => {
+			if (!this.title) {
+				this.$refs.frameComponent.setAttribute(
+					"draggable",
+					false.toString()
+				);
+				return (this.$data.draggable.stopDragging = true);
+			}
+		};
+
 		DynamicStyle.getInstance().addElement(
 			this.$refs.frameComponent,
 			this.frameStyleString
 		);
 
-		if (this.title)
+		if (this.title) {
 			DynamicStyle.getInstance().addElement(
 				this.$refs.frameHeader,
 				this.frameHeaderStyleString
 			);
+
+			this.$data.draggable.handle = this.$refs.handle;
+			this.$refs.frameComponent.addEventListener(
+				"mousedown",
+				this.bringToTop
+			);
+		}
 
 		if (this.titleColour)
 			DynamicStyle.getInstance().addElement(
@@ -51,6 +90,31 @@ export default class Frame extends Vue {
 			);
 	}
 
+	public closeWindow(): void {
+		if (this.closeable && this.closeCallback) this.closeCallback();
+	}
+
+	public mouseDown(e): void {
+		document.addEventListener("mousemove", this.mouseMove);
+		document.addEventListener("mouseup", this.cancelMove);
+	}
+
+	public mouseMove(e): void {
+		this.$refs.frameComponent.style.width =
+			e.clientX - this.$refs.frameComponent.offsetLeft + "px";
+		this.$refs.frameComponent.style.height =
+			e.clientY - this.$refs.frameComponent.offsetTop + "px";
+	}
+
+	public cancelMove(e): void {
+		document.removeEventListener("mousemove", this.mouseMove, false);
+		document.removeEventListener("mouseup", this.cancelMove, false);
+	}
+
+	public bringToTop(e): void {
+		DynamicStyle.getInstance().bringToTop(this.$refs.frameComponent);
+	}
+
 	public get frameStyleString(): string[] {
 		return [
 			`frame|${this.type}`,
@@ -63,7 +127,7 @@ export default class Frame extends Vue {
 
 	public get frameHeaderStyleString(): string[] {
 		return [
-			`frame-header|${this.type}`,
+			`frame-header${this.titleColour ? "-bg" : ""}|${this.type}`,
 			`skin-${this.type}/${
 				DynamicStyle.getInstance().frames[this.type][1]
 			}`,
@@ -77,7 +141,7 @@ export default class Frame extends Vue {
 			`skin-${this.type}/${
 				DynamicStyle.getInstance().frames[this.type][2]
 			}`,
-			this.frameColour,
+			this.titleColour,
 		];
 	}
 }

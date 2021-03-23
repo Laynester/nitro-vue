@@ -1,0 +1,11 @@
+<nitro-border type="0">
+    <div class="d-flex p-1 justify-content-between">
+        <img :src="`/assets/images/generic/${collapsed ? 'plus' : 'minus'}.png`" @click="toggleCollapsed()"
+            class="cursor-pointer mr-1 align-self-center">
+        <div class="align-self-center w-100">
+            {{resultCode | translate}}
+        </div>
+        <i class="fas mr-1 align-self-center" @click="toggleListMode()"
+            :class="{ 'fa-bars': (displayMode === 1), 'fa-th': (displayMode === 0) }" />
+    </div>
+</nitro-border>

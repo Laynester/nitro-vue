@@ -1,0 +1,11 @@
+.nitro-navigator {
+    width:300px;
+    z-index: $navigator-zindex;
+    min-height: 300px;
+    min-width: 300px;
+    position: absolute;
+
+    .searchResultList {
+        height:100%;
+    }
+}

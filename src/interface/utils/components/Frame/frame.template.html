@@ -1,6 +1,11 @@
-<div ref="frameComponent">
-    <div ref="frameHeader" v-if="title">
-        <div ref="frameHeaderText" v-html="title" />
+<div ref="frameComponent" v-draggable="draggable">
+    <div v-if="title" class="d-flex position-relative">
+        <div ref="frameHeader" class="w-100">
+            <div ref="frameHeaderText" v-html="title" />
+        </div>
+        <div class="frame-handle position-absolute h-100 w-100" ref="handle" />
+        <div v-if="closeable" class="nitro-frame-close" :data-style="type" @click="closeWindow()" />
     </div>
     <slot></slot>
+    <div v-if="!resize" class="frame-resize cursor-nwse-resize" @mousedown="mouseDown" />
 </div>

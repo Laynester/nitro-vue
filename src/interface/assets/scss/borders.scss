@@ -4,6 +4,11 @@
         border-image-slice: 6 fill;
         border-image-width: 6px;
         border-image-repeat: repeat repeat;
+        padding:10px;
+
+        .nitro-border[data-style="0"]  {
+            padding:0px;
+        }
     }
 
     &[data-style="1"] {

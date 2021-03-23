@@ -25,6 +25,7 @@ import { UserInfoEvent } from 'nitro-renderer/src/nitro/communication/messages/i
 import { DesktopViewComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/desktop/DesktopViewComposer';
 import { ConvertGlobalRoomIdMessageComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/navigator/ConvertGlobalRoomIdComposer';
 import { NavigatorCategoriesComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/navigator/NavigatorCategoriesComposer';
+import { NavigatorInitComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/navigator/NavigatorInitComposer';
 import { NavigatorSearchComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/navigator/NavigatorSearchComposer';
 import { NavigatorSettingsComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/navigator/NavigatorSettingsComposer';
 import { RoomInfoComposer } from 'nitro-renderer/src/nitro/communication/messages/outgoing/room/data/RoomInfoComposer';
@@ -90,6 +91,7 @@ export class NavigatorService implements ILinkEventTracker
     constructor()
     {
         this._states.filter = NavigatorService.SEARCH_FILTERS[0];
+
         this._states.data = new NavigatorData();
 
         this.onRoomSessionEvent = this.onRoomSessionEvent.bind(this);
@@ -105,7 +107,6 @@ export class NavigatorService implements ILinkEventTracker
             LegacyExternalInterface.addCallback(HabboWebTools.OPENROOM, this.enterRoomWebRequest);
         }
 
-        console.log('here 123');
     }
 
     private registerMessages(): void
@@ -168,7 +169,6 @@ export class NavigatorService implements ILinkEventTracker
 
     private onRoomForwardEvent(event: RoomForwardEvent): void
     {
-        console.log('here');
         if(!(event instanceof RoomForwardEvent)) return;
 
         const parser = event.getParser();
@@ -655,6 +655,13 @@ export class NavigatorService implements ILinkEventTracker
     public get eventUrlPrefix(): string
     {
         return 'navigator';
+    }
+
+    public loadNavigator(): void
+    {
+        Nitro.instance.communication.connection.send(new NavigatorInitComposer());
+
+        this._states.isLoaded = true;
     }
 
 

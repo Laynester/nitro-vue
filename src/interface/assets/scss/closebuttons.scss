@@ -1,0 +1,40 @@
+.nitro-frame-close {
+    z-index: 10;
+
+    &[data-style="0"] {
+        background-image: url('/assets/images/skin-0/volter-close-buttons.png');
+        width:13px;
+        height:13px;
+        align-self: center;
+        margin-left:2px;
+        margin-bottom:5px;
+        flex-shrink: 0;
+
+        &:hover {
+            background-position-y: -13px;
+        }
+
+        &:active {
+            background-position-y: 13px;
+        }
+    }
+
+    &[data-style="1"] {
+        background-image: url('/assets/images/skin-3/ubuntu-close-buttons.png');
+        width:19px;
+        height:20px;
+        align-self: center;
+        margin-left:2px;
+        margin-bottom:5px;
+        flex-shrink: 0;
+        position: absolute;
+
+        &:hover {
+            background-position-x: 19px;
+        }
+
+        &:active {
+            background-position-x: 19px;
+        }
+    }
+}

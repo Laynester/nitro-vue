@@ -1,6 +1,8 @@
 <div id="main">
-    <Landing v-if="landingViewVisible" />
+    <Landing v-show="landingViewVisible" />
     <ToolBar :isInRoom="!landingViewVisible" />
-    <Navigator />
+    <Navigator v-if="$services.settingService.navigatorVisible" />
+    <Navigator v-if="$services.settingService.navigatorVisible" />
+    <Navigator v-if="$services.settingService.navigatorVisible" />
     <Room ref="room" />
 </div>

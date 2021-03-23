@@ -35,7 +35,10 @@ export class DynamicStyle
 
         if (this.images.has(newEl.namespace))
         {
-            if(newEl.image && newEl.colourCode) this.setElements(newEl.namespace);
+            if (newEl.image && newEl.colourCode)
+            {
+                newEl.setStyle();
+            }
         }
         else
         {
@@ -51,6 +54,28 @@ export class DynamicStyle
         {
             return e.element = el;
         });
+    }
+
+    public bringToTop(el:HTMLElement): void
+    {
+        if (!el.getAttribute('draggable')) return;
+
+        if (el.getAttribute('draggable') == false.toString()) return;
+
+        let maxZ = 90;
+
+        this.elements.forEach((e) =>
+        {
+            if (!e.element.getAttribute('draggable') || e.element.getAttribute('draggable') == false.toString() || e.element.getAttribute('draggable') === null) return;
+
+            console.log(e.element.getAttribute('draggable'));
+
+            if (!e.element.style.zIndex) e.element.style.zIndex = (90).toString();
+
+            if(parseInt(e.element.style.zIndex) >= maxZ) maxZ = parseInt(e.element.style.zIndex) + 1;
+        });
+
+        el.style.zIndex = maxZ.toString();
     }
 
     public setElements(namespace: string)
@@ -69,7 +94,7 @@ export class DynamicStyle
                 'volter-frame-header.png',
                 'volter-frame-header-text.png',
             ],
-            3: [
+            1: [
                 'ubuntu-frame.png',
                 'ubuntu-frame-header.png'
             ]

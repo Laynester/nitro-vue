@@ -26,7 +26,7 @@ export default class ToolBar extends Vue {
 	}
 
 	public visitHomeRoom(): void {
-		Services.getInstance().navigatorService.goToHomeRoom();
+		Services.instance().navigatorService.goToHomeRoom();
 	}
 
 	public visitDesktop(): void {
