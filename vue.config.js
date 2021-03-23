@@ -1,3 +1,2 @@
-chainWebpack: config => {
-    config.plugins.delete('hmr');
-},
+module.exports = {
+};

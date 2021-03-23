@@ -20,6 +20,9 @@
             border-image-repeat: repeat repeat; 
             z-index: 1;  
         }
+        > div {
+            z-index: 2;
+        }
     }
 
     &[data-style="3"] {
@@ -34,9 +37,4 @@
     &[data-style="3"] {
         background-image: none !important;
     }
-}
-
-
-.nitro-frame-content {
-    z-index: 2;
 }

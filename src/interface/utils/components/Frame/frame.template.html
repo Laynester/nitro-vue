@@ -1,0 +1,6 @@
+<div ref="frameComponent">
+    <div ref="frameHeader" v-if="title">
+        <div ref="frameHeaderText" v-html="title" />
+    </div>
+    <slot></slot>
+</div>

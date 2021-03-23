@@ -1,4 +1,4 @@
-﻿import { RoomWidgetUpdateEvent } from '../events/RoomWidgetUpdateEvent';
+﻿import { RoomWidgetUpdateEvent } from 'nitro-renderer/src/nitro/ui/widget/events/RoomWidgetUpdateEvent';
 
 export class RoomWidgetInventoryUpdatedMessage extends RoomWidgetUpdateEvent
 {

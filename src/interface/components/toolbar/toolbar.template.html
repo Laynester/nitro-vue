@@ -1,10 +1,9 @@
-<div v-colourizer="['frame|0','skin-0/volter-frame.png','#696969']"
-    class="nitro-toolbar d-flex flex-column justify-content-between">
-    <div class="nitro-frame-content">
+<nitro-frame type="0" frameColour="#696969" class="nitro-toolbar">
+    <div class="nitro-frame-content d-flex flex-column justify-content-between h-100">
         <div class="d-flex flex-column justify-content-center toolbar-group">
             <ToolbarIcon type="help" :frames="6" />
-            <ToolbarIcon type="home" :frames="7" />
-            <ToolbarIcon type="exit" :frames="2" />
+            <ToolbarIcon v-if="!isInRoom" type="home" :frames="7" />
+            <ToolbarIcon v-else type="exit" :frames="2" />
         </div>
         <div class="d-flex flex-column justify-content-center toolbar-group">
             <ToolbarIcon type="navigator" :frames="4" />
@@ -17,4 +16,4 @@
             test
         </div>
     </div>
-</div>
+</nitro-frame>

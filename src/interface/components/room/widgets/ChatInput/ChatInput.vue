@@ -1,6 +1,6 @@
 <template>
 	<div class="room-chat-input">
-		<div class="chat-input-container" v-colourizer="['border|1']">
+		<nitro-border type="1" class="chat-input-container">
 			<img src="/assets/images/generic/chat/chat-style.png" />
 			<input
 				ref="chatInputView"
@@ -9,7 +9,7 @@
 				@keydown="onKeyDownEvent"
 				v-model="inputValue"
 			/>
-		</div>
+		</nitro-border>
 	</div>
 </template>
 

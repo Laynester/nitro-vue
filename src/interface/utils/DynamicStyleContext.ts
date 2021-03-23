@@ -12,7 +12,7 @@ export class DynamicStyleContext
 
     private RGB: { r, g, b };
 
-    private element: HTMLElement;
+    public element: HTMLElement;
 
     private imageEl: HTMLImageElement;
 

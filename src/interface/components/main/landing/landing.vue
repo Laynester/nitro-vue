@@ -7,12 +7,12 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Landing extends Vue {
 	public backgroundColour: string = "#000";
-	public background: string;
-	public sun: string;
-	public drape: string;
-	public left: string;
-	public right: string;
-	public rightRepeat: string;
+	public background: string = null;
+	public sun: string = null;
+	public drape: string = null;
+	public left: string = null;
+	public right: string = null;
+	public rightRepeat: string = null;
 
 	public mounted(): void {
 		this.background = Nitro.instance.core.configuration.interpolate(

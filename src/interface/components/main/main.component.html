@@ -1,6 +1,6 @@
 <div id="main">
     <Landing v-if="landingViewVisible" />
-    <ToolBar />
+    <ToolBar :isInRoom="!landingViewVisible" />
     <Navigator />
     <Room ref="room" />
 </div>
