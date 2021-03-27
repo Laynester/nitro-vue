@@ -10,6 +10,8 @@ export class DynamicStyle
 
     public frames: Object;
 
+    private lastBroughtToTop: HTMLElement;
+
     constructor()
     {
         this.elements = [];
@@ -58,24 +60,35 @@ export class DynamicStyle
 
     public bringToTop(el:HTMLElement): void
     {
-        if (!el.getAttribute('draggable')) return;
+        const els = document.querySelectorAll("div.nitro-frame[draggable=true]");
 
-        if (el.getAttribute('draggable') == false.toString()) return;
+        let maxZ = 0;
 
-        let maxZ = 90;
+		els.forEach((ele: HTMLElement) => {
+			if (window.getComputedStyle) {
+				let z = ele.style.zIndex;
 
-        this.elements.forEach((e) =>
-        {
-            if (!e.element.getAttribute('draggable') || e.element.getAttribute('draggable') == false.toString() || e.element.getAttribute('draggable') === null) return;
+				if (!z || z === undefined || z === null) {
+					z = document.defaultView
+						.getComputedStyle(el, null)
+						.getPropertyValue("z-index");
+					ele.style.zIndex = z;
+				}
 
-            console.log(e.element.getAttribute('draggable'));
+				if (parseInt(z) > maxZ) maxZ = parseInt(z);
+			}
+		});
 
-            if (!e.element.style.zIndex) e.element.style.zIndex = (90).toString();
+		if (maxZ) {
+            if (this.lastBroughtToTop && this.lastBroughtToTop == el) return;
 
-            if(parseInt(e.element.style.zIndex) >= maxZ) maxZ = parseInt(e.element.style.zIndex) + 1;
-        });
+			maxZ += 1;
 
-        el.style.zIndex = maxZ.toString();
+            this.lastBroughtToTop = el;
+
+			el.style.zIndex = maxZ.toString();
+        }
+
     }
 
     public setElements(namespace: string)

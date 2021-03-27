@@ -1,0 +1,18 @@
+.nitro-navigator-rc {
+    z-index: $navigator-rc-zindex;
+    position: absolute;
+    width:600px;
+    height:370px;
+
+    .rc-grid {
+        display: grid;
+        grid-template-columns: repeat(2,135px);
+        grid-template-rows: max-content;
+        grid-column-gap: 2px;
+        grid-row-gap: 2px;
+    }
+
+    &:not([dragging="true"]) {
+        left:calc(100% - 1200px);
+    }
+}

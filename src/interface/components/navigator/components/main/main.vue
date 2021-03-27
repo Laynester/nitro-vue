@@ -4,9 +4,10 @@
 import { NavigatorTopLevelContext } from "nitro-renderer/src/nitro/communication/messages/parser/navigator/utils/NavigatorTopLevelContext";
 import { Component, Vue } from "vue-property-decorator";
 import SearchResult from "../searchResult/searchResult.vue";
+import RoomCreator from "../roomCreator/roomCreator.vue";
 
 @Component({
-	components: { SearchResult },
+	components: { RoomCreator, SearchResult },
 })
 export default class NavigatorMain extends Vue {
 	public beforeMount(): void {
@@ -24,6 +25,10 @@ export default class NavigatorMain extends Vue {
 		this.$services.navigatorService.setCurrentContext(context);
 
 		this.$services.navigatorService.clearSearch();
+	}
+
+	public showRoomCreator(): void {
+		this.$services.navigatorService.toggleRoomCreator();
 	}
 
 	public hideNavigator(): void {

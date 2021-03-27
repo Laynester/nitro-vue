@@ -1,3 +1,4 @@
+import { BootstrapVue } from "bootstrap-vue";
 import Vue from 'vue';
 import App from './interface/app.vue';
 import NitroBorder from './interface/utils/components/Border/Border.vue';
@@ -6,6 +7,8 @@ import directives from './interface/utils/directives';
 import filters from './interface/utils/filters';
 
 Vue.config.productionTip = false;
+
+Vue.use(BootstrapVue);
 
 new Vue({
     filters: filters,

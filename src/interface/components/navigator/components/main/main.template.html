@@ -1,18 +1,50 @@
-<nitro-frame type="0" title="navigator" frameColour="#4a92b7" titleColour="#4a92b7" class="nitro-navigator"
-    closeable="true" :closeCallback="hideNavigator">
-    <div class="nitro-frame-content d-flex flex-column h-100 flex-grow-1 position-relative">
-        <div class="nitro-tab-context" data-style="0">
-            <div class="nitro-tab" data-style="0" v-for="(c,i) in $services.navigatorService.states.topLevelContexts"
-                :class="{'active': $services.navigatorService.states.topLevelContext == c}" :key="i"
-                @click="setCurrentContext(c)">
-                {{'navigator.toplevelview.' + c.code | translate}}
+<div id="nitro-navigator">
+    <nitro-frame type="0" :title="'navigator.title' | translate" frameColour="#4a92b7" titleColour="#4a92b7"
+        class="nitro-navigator" closeable="true" :closeCallback="hideNavigator">
+        <div class="nitro-frame-content d-flex flex-column position-relative">
+            <div class="nitro-tab-context" data-style="0">
+                <div class="nitro-tab" data-style="0"
+                    v-for="(c,i) in $services.navigatorService.states.topLevelContexts"
+                    :class="{'active': $services.navigatorService.states.topLevelContext == c}" :key="i"
+                    @click="setCurrentContext(c)">
+                    {{'navigator.toplevelview.' + c.code | translate}}
+                </div>
             </div>
+            <nitro-border type="0" class="d-flex flex-column navigator-list-content">
+                <nitro-border type="0" class="p-1 d-flex flex-row justify-content-between" colour="#CBCBCB">
+                    <div class="d-flex flex-row">
+                        <img class="mr-1" src="/assets/images/generic/navigator/room_key.gif" />
+                        <div class="align-self-center">
+                            {{'navigator.moreroomscaption' | translate}}
+                        </div>
+                    </div>
+                    <div class="nitro-button d-flex" data-style="0" @click="showRoomCreator()">
+                        <span class="align-self-center">
+                            {{'navigator.create.room' | translate}}
+                        </span>
+                    </div>
+                </nitro-border>
+                <div class="verticalList mb-2 h-100" data-style="0">
+                    <div class="verticalListGroup searchResultList" data-style="0">
+                        <SearchResult class="verticalListGroup-item"
+                            v-for="(r,i) in $services.navigatorService.states.lastSearchResults" :key="i" :result="r" />
+                    </div>
+                </div>
+                <nitro-border type="0" class="p-1 d-flex flex-row justify-content-between" colour="#CBCBCB">
+                    <div class="d-flex flex-row">
+                        <img class="mr-1" src="/assets/images/generic/navigator/room_key.gif" />
+                        <div class="align-self-center">
+                            {{'navigator.moreroomscaption' | translate}}
+                        </div>
+                    </div>
+                    <div class="nitro-button d-flex" data-style="0" @click="showRoomCreator()">
+                        <span class="align-self-center">
+                            {{'navigator.create.room' | translate}}
+                        </span>
+                    </div>
+                </nitro-border>
+            </nitro-border>
         </div>
-        <nitro-border type="0" class="h-100 flex-grow-1 d-flex flex-column">
-            <div class="verticalList searchResultList flex-grow-1">
-                <SearchResult v-for="(r,i) in $services.navigatorService.states.lastSearchResults" :key="i"
-                    :result="r" />
-            </div>
-        </nitro-border>
-    </div>
-</nitro-frame>
+    </nitro-frame>
+    <RoomCreator v-if="$services.navigatorService.states.roomCreator" />
+</div>

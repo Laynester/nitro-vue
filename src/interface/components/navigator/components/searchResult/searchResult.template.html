@@ -1,11 +1,18 @@
 <nitro-border type="0">
     <div class="d-flex p-1 justify-content-between">
-        <img :src="`/assets/images/generic/${collapsed ? 'plus' : 'minus'}.png`" @click="toggleCollapsed()"
-            class="cursor-pointer mr-1 align-self-center">
         <div class="align-self-center w-100">
-            {{resultCode | translate}}
+            <nitro-border type="3" colour="#3a3a3a" class="d-flex flex-row text-white px-1">
+                <div class="w-100">
+                    {{resultCode | translate}}
+                </div>
+                <i class="fas mr-1 align-self-center" @click="toggleListMode()"
+                    :class="{ 'fa-bars': (displayMode === 1), 'fa-th': (displayMode === 0) }" />
+                <i @click="toggleCollapsed()" class="cursor-pointer align-self-center fas"
+                    :class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}" />
+            </nitro-border>
         </div>
-        <i class="fas mr-1 align-self-center" @click="toggleListMode()"
-            :class="{ 'fa-bars': (displayMode === 1), 'fa-th': (displayMode === 0) }" />
+    </div>
+    <div class="verticalListGroup searchResult" data-style="1" v-if="!collapsed">
+        <component :is="displayComponent" v-for="(r,i) in result.rooms" :key="'a-' + i" :room="r" />
     </div>
 </nitro-border>

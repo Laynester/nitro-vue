@@ -1,4 +1,5 @@
 import { NavigatorService } from './NavigatorService';
+import { NotificationsService } from './NotificationsService';
 import { SettingService } from './SettingService';
 
 export class Services
@@ -9,10 +10,13 @@ export class Services
 
     private _settingService: SettingService;
 
+    private _notificationService: NotificationsService;
+
     constructor()
     {
         this._navigatorService = new NavigatorService();
         this._settingService = new SettingService();
+        this._notificationService = new NotificationsService();
     }
 
     static instance()
@@ -30,5 +34,10 @@ export class Services
     public get settingService(): SettingService
     {
         return this._settingService;
+    }
+
+    public get notificationsService(): NotificationsService
+    {
+        return this._notificationService;
     }
 }

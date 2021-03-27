@@ -9,6 +9,7 @@
 				@keydown="onKeyDownEvent"
 				v-model="inputValue"
 			/>
+			test
 		</nitro-border>
 	</div>
 </template>

@@ -6,3 +6,141 @@
 .room-component {
     position: relative;
 }
+
+.loading-screen {
+    position: absolute;
+    left:0;right:0;
+    bottom:0;top:0;
+    margin: auto;
+    z-index: 9999999;
+    background:#333;
+
+    .loading-overlay {
+        position: absolute;
+        left:0;right:0;
+        bottom:0;top:0;
+        border-image-source: url('/assets/images/borders/border-tv.png');
+        border-image-slice: 93 fill;
+        border-image-width: 93px;
+        border-image-repeat: repeat repeat;
+        z-index: 4;
+    }
+
+    .loading-content {
+        height: calc(100% - 40px);
+        width: calc(100% - 40px);
+        margin: 20px;
+        z-index: 2;
+        background-color: #191e3f;
+        background-image: url(/assets/images/generic/loading/background.png);
+        background-position: bottom;
+        background-repeat: repeat-x;
+        position: relative;
+    }
+
+    .loading-cloud {
+        background-image: url(https://1.bp.blogspot.com/-5uPDqfPaj8k/X5js-ZUpzDI/AAAAAAABemk/xiArTUcZDrwPUBO5CacaJNXhHBxXpTV3ACPcBGAsYHg/s0/image_cloud2.png);
+        width:86px;
+        height: 48px;
+        left:-86px;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-duration: 40s;
+        position: absolute;
+        top:80px;
+        animation-name: moveCloud;
+        animation-timing-function: cubic-bezier();
+
+        &:nth-of-type(2) {
+            animation-delay: 8s;
+            top:120px;
+        }
+
+        &:nth-of-type(3) {
+            animation-delay: 10s;
+            top:-5px;
+        }
+
+        &:nth-of-type(4) {
+            top:148px;
+            animation-delay: 13s;
+        }
+
+        &:nth-of-type(5) {
+            animation-delay: 16s;
+            top:163px;
+        }
+
+        &:nth-of-type(6) {
+            animation-delay: 23s;
+            top:20px;
+        }
+    }
+
+    .loading-static {
+        z-index: 3;
+        position: absolute;
+        top: -500px;
+        right: -500px;
+        bottom: -500px;
+        left: -500px;
+        background: transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0;
+        background-size: 320px 320px;
+        opacity: 0.1;
+        animation: noise 2s steps(8,end) infinite both;
+      }
+}
+
+@keyframes moveCloud {
+    0% {
+        left:-86px;
+    }
+    100% {
+        left:calc(100% + 86px);
+    }
+}
+
+@keyframes noise {
+    0% {
+      transform: translateX(0px,0px); }
+    10% {
+      transform: translate(-100px, 100px);
+    }
+    20% {
+      transform: translate(150px, -100px);
+    }
+    30% {
+      transform: translate(-100px,100px);
+    }
+    40% {
+      transform: translate(100px, -150px);
+    }
+    50% {
+      transform: translate(-100px, 200px);
+    }
+    60% {
+      transform: translate(-200px, -100px);
+    }
+    70% {
+      transform: translateY(50px, 100px);
+    }
+    80% {
+      transform: translate(100px, -150px);
+    }
+    90% {
+      transform: translate(0px, 200px);
+    }
+    100% {
+      transform: translate(-100px, 100px);
+    }
+  }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

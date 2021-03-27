@@ -1,11 +1,39 @@
 .nitro-navigator {
     width:300px;
     z-index: $navigator-zindex;
-    min-height: 300px;
-    min-width: 300px;
+    max-width: 425px;
+    min-width: 425px;
+
+    height:474px;
+
+    min-height: 474px;
+    max-height: 700px;
     position: absolute;
+    top:25%;
+    left:70px;
 
     .searchResultList {
         height:100%;
+        .searchResult {
+            .searchResult-room {
+                padding:2px 4px;
+                font-size: 11px;
+                .searchResult-room-userCount {
+                    color:#fff;
+                    padding:1px 6px;
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+
+    .nitro-frame-content {
+        height: calc(100% - 22px);
+    }
+
+    .navigator-list-content {
+        height:calc(100% - 21px)
     }
 }
+
+@import './components/roomCreator/index.scss'

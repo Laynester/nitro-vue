@@ -5,6 +5,7 @@ import { Services } from './Services';
 
 export class SettingService
 {
+    public POS_MEMORY = new Map();
 
     private _states = Vue.observable({
        navigatorVisible: false,
@@ -37,6 +38,11 @@ export class SettingService
 
 			Nitro.instance.roomSessionManager.removeSession(-1);
 		}
+    }
+
+    public hideNavigator(): void
+    {
+        this._states.navigatorVisible = false;
     }
 
     public toggleNavigator(): void

@@ -47,6 +47,7 @@ import { RoomObjectType } from "nitro-renderer/src/nitro/room/object/RoomObjectT
 import { ChatInputHandler } from "./widgets/handlers/ChatInputHandler";
 import { ChatWidgetHandler } from "./widgets/handlers/ChatWidgetHandler";
 import { RoomWidgetRoomViewUpdateEvent } from "./widgets/events/RoomWidgetRoomViewUpdateEvent";
+import { RoomWidgetRoomEngineUpdateEvent } from "./widgets/events/RoomWidgetRoomEngineUpdateEvent";
 
 @Component({})
 export default class Room
@@ -58,7 +59,7 @@ export default class Room
 
 	private _events: IEventDispatcher;
 	private _handlers: IRoomWidgetHandler[];
-	private _widgets: Map<string, Element>;
+	private _widgets: Map<string, Vue>;
 	private _widgetHandlerMessageMap: Map<string, IRoomWidgetHandler[]>;
 	private _widgetHandlerEventMap: Map<string, IRoomWidgetHandler[]>;
 
@@ -81,6 +82,12 @@ export default class Room
 		roomCanvas: HTMLElement;
 		roomWidgets: HTMLElement;
 	};
+
+	public data() {
+		return {
+			roomsession: null,
+		};
+	}
 
 	public mounted() {
 		this.processEvent = this.processEvent.bind(this);
@@ -164,7 +171,7 @@ export default class Room
 
 		stage.addChild(displayObject);
 
-		this._roomSession = session;
+		this.$data.roomsession = session;
 
 		this.insertCanvas();
 
@@ -174,7 +181,7 @@ export default class Room
 	}
 
 	public endRoom(): void {
-		if (!this._roomSession) return;
+		if (!this.$data.roomsession) return;
 
 		Nitro.instance.ticker.remove(this.update, this);
 
@@ -187,7 +194,9 @@ export default class Room
 		for (const widget of this._widgets.values()) {
 			if (!widget) continue;
 
-			widget.remove();
+			widget.$destroy();
+
+			widget.$el.remove();
 		}
 
 		for (const handler of this._handlers) handler && handler.dispose();
@@ -207,7 +216,7 @@ export default class Room
 		this._widgetHandlerMessageMap.clear();
 		this._widgetHandlerEventMap.clear();
 		this._events.removeAllListeners();
-		this._roomSession = null;
+		this.$data.roomsession = null;
 
 		this.removeCanvas();
 
@@ -257,7 +266,7 @@ export default class Room
 	}
 
 	private onMouseEvent(event: MouseEvent): void {
-		if (!event || !this._roomSession) return;
+		if (!event || !this.$data.roomsession) return;
 
 		const x = event.clientX;
 		const y = event.clientY;
@@ -299,7 +308,9 @@ export default class Room
 				return;
 		}
 
-		Nitro.instance.roomEngine.setActiveRoomId(this._roomSession.roomId);
+		Nitro.instance.roomEngine.setActiveRoomId(
+			this.$data.roomsession.roomId
+		);
 		Nitro.instance.roomEngine.dispatchMouseEvent(
 			this.getFirstCanvasId(),
 			x,
@@ -313,7 +324,7 @@ export default class Room
 	}
 
 	private onTouchEvent(event: TouchEvent): void {
-		if (!event || !this._roomSession) return;
+		if (!event || !this.$data.roomsession) return;
 
 		let eventType = event.type;
 
@@ -366,7 +377,9 @@ export default class Room
 			y = event.changedTouches[0].clientY;
 		}
 
-		Nitro.instance.roomEngine.setActiveRoomId(this._roomSession.roomId);
+		Nitro.instance.roomEngine.setActiveRoomId(
+			this.$data.roomsession.roomId
+		);
 		Nitro.instance.roomEngine.dispatchMouseEvent(
 			this.getFirstCanvasId(),
 			x,
@@ -380,7 +393,7 @@ export default class Room
 	}
 
 	private onWindowResizeEvent(event: UIEvent): void {
-		if (!this._roomSession) return;
+		if (!this.$data.roomsession) return;
 
 		if (this._resizeTimer) clearTimeout(this._resizeTimer);
 
@@ -391,21 +404,17 @@ export default class Room
 			);
 
 			Nitro.instance.roomEngine.initializeRoomInstanceRenderingCanvas(
-				this._roomSession.roomId,
+				this.$data.roomsession.roomId,
 				this.getFirstCanvasId(),
 				Nitro.instance.width,
 				Nitro.instance.height
 			);
-			/*
-
 			this._events.dispatchEvent(
 				new RoomWidgetRoomViewUpdateEvent(
 					RoomWidgetRoomViewUpdateEvent.SIZE_CHANGED,
 					this.getRoomViewRect()
 				)
 			);
-
-			*/
 
 			this.setRoomBackground();
 
@@ -414,7 +423,7 @@ export default class Room
 	}
 
 	private onWindowMouseWheelEvent(event: WheelEvent): void {
-		if (!event || !this._roomSession) return;
+		if (!event || !this.$data.roomsession) return;
 
 		if (event.target !== Nitro.instance.renderer.view) return;
 
@@ -450,7 +459,7 @@ export default class Room
 		this._roomScale = scale;
 
 		Nitro.instance.roomEngine.events.dispatchEvent(
-			new RoomZoomEvent(this._roomSession.roomId, scale, false)
+			new RoomZoomEvent(this.$data.roomsession.roomId, scale, false)
 		);
 	}
 
@@ -480,6 +489,7 @@ export default class Room
 				break;
 			}
 		}
+
 		if (widgetHandler) {
 			const messageTypes = widgetHandler.messageTypes;
 
@@ -546,10 +556,11 @@ export default class Room
 
 				widget.registerUpdateEvents(this._events);
 
-				this._widgets.set(type, widgetRef);
+				this._widgets.set(type, inst);
 			}
 
 			widgetHandler.container = this;
+			console.log(widgetHandler);
 		}
 
 		if (sendSizeUpdate)
@@ -782,24 +793,20 @@ export default class Room
 
 		switch (event.type) {
 			case RoomEngineEvent.NORMAL_MODE:
-				/*
 				this._events.dispatchEvent(
 					new RoomWidgetRoomEngineUpdateEvent(
 						RoomWidgetRoomEngineUpdateEvent.RWREUE_NORMAL_MODE,
 						event.roomId
 					)
 				);
-				*/
 				return;
 			case RoomEngineEvent.GAME_MODE:
-				/*
 				this._events.dispatchEvent(
 					new RoomWidgetRoomEngineUpdateEvent(
 						RoomWidgetRoomEngineUpdateEvent.RWREUE_GAME_MODE,
 						event.roomId
 					)
 				);
-				*/
 				return;
 		}
 	}
@@ -849,7 +856,8 @@ export default class Room
 		category: number
 	): boolean {
 		return (
-			this._roomSession.controllerLevel >= RoomControllerLevel.GUEST ||
+			this.$data.roomsession.controllerLevel >=
+				RoomControllerLevel.GUEST ||
 			Nitro.instance.sessionDataManager.isModerator ||
 			this.isOwnerOfFurniture(
 				Nitro.instance.roomEngine.getRoomObject(
@@ -1032,7 +1040,7 @@ export default class Room
 	}
 
 	public get roomSession(): IRoomSession {
-		return this._roomSession;
+		return this.$data.roomsession;
 	}
 }
 </script>

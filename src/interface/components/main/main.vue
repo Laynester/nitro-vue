@@ -31,6 +31,7 @@ import ChatInput from "../room/widgets/ChatInput/ChatInput.vue";
 import RoomChat from "../room/widgets/RoomChat/RoomChat.vue";
 import ToolBar from "../toolbar/toolbar.vue";
 import Landing from "./landing/landing.vue";
+import NotificationCenter from "../notifications/components/notification-center/NotificationCenter.vue";
 
 @Component({
 	components: {
@@ -38,6 +39,7 @@ import Landing from "./landing/landing.vue";
 		ToolBar,
 		Room,
 		Navigator,
+		NotificationCenter,
 	},
 })
 export default class App extends Vue implements ILinkEventTracker {

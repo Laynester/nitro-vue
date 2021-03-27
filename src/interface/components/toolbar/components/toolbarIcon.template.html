@@ -1,2 +1,3 @@
 <div @mouseover="mouseOver" @mouseleave="mouseOut" @click="click" ref="selfIcon"
-    class="cursor-pointer align-self-center" :class="`toolbar-${type}`" :data-frame="currentFrame" />
+    class="cursor-pointer align-self-center" :class="`toolbar-${type}`" :data-frame="currentFrame"
+    v-b-tooltip.hover.right :title="tooltip() | translate" />

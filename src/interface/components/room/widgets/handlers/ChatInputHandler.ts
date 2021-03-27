@@ -34,7 +34,7 @@ export class ChatInputHandler implements IRoomWidgetHandler
 
     public dispose(): void
     {
-        if(this._disposed) return;
+        if (this._disposed) return;
 
         this._container     = null;
         this._widget        = null;
@@ -171,6 +171,7 @@ export class ChatInputHandler implements IRoomWidgetHandler
                     switch(chatMessage.chatType)
                     {
                         case RoomWidgetChatMessage.CHAT_DEFAULT:
+                            console.log(this._container.roomSession);
                             this._container.roomSession.sendChatMessage(text, styleId);
                             break;
                         case RoomWidgetChatMessage.CHAT_SHOUT:

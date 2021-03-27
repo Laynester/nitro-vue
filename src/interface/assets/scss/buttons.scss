@@ -1,0 +1,18 @@
+.nitro-button {
+    cursor: pointer;
+    &[data-style="0"] {
+        border-image-source: url('/assets/images/buttons/button0/button_0.png');
+        border-image-slice: 4 fill;
+        border-image-width: 4px;
+        border-image-repeat: repeat repeat;
+        padding:0  6px;
+
+        &:hover {
+            border-image-source: url('/assets/images/buttons/button0/button_0_hover.png');
+        }
+
+        &:active {
+            border-image-source: url('/assets/images/buttons/button0/button_0_active.png');
+        }
+    }
+}

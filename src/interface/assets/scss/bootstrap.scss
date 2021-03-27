@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/modal";
+@import '~bootstrap-vue/src/index.scss';
+
+.tooltip-inner {background:#333;}
+.tooltip .arrow:before {border-right-color: #333;}

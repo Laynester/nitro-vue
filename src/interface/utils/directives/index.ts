@@ -1,4 +1,4 @@
-import { Draggable } from 'draggable-vue-directive';
 import Colourize from './Colourize';
+import Draggable from './Draggable';
 
 export default { Colourize, Draggable };

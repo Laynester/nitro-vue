@@ -7,7 +7,7 @@
         padding:10px;
 
         .nitro-border[data-style="0"]  {
-            padding:0px;
+            padding:1px;
         }
     }
 
@@ -24,5 +24,21 @@
         border-image-width: 7px;
         border-image-repeat: repeat repeat;
         margin:2px;
+    }
+
+    &[data-style="3"] {
+        border-image-source: url('/assets/images/borders/border-3.png');
+        border-image-slice: 3 fill;
+        border-image-width: 3px;
+        border-image-repeat: repeat repeat;
+        padding:2px;
+    }
+
+    &[data-style="4"] {
+        border-image-source: url('/assets/images/borders/border-4.png');
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+        border-image-repeat: repeat repeat;
+        padding:2px;
     }
 }

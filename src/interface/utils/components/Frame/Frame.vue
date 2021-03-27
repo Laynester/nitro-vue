@@ -27,6 +27,8 @@ export default class Frame extends Vue {
 
 	@Prop() private resizable: boolean;
 
+	@Prop() public center: boolean;
+
 	private static dis: HTMLElement[];
 
 	public data() {
@@ -34,12 +36,16 @@ export default class Frame extends Vue {
 			resize: false,
 			draggable: {
 				handle: null,
+				center: false,
 			},
 		};
 	}
 
 	public mounted(): void {
 		Frame.dis = [];
+
+		if (this.center !== undefined)
+			this.$data.draggable.center = this.center;
 
 		if (this.resizable !== undefined) this.$data.resize = this.resizable;
 
@@ -50,7 +56,19 @@ export default class Frame extends Vue {
 					false.toString()
 				);
 				return (this.$data.draggable.stopDragging = true);
+			} else {
+				this.$refs.frameComponent.setAttribute(
+					"dragging",
+					true.toString()
+				);
 			}
+		};
+
+		this.$data.draggable.onDragStop = (e) => {
+			this.$refs.frameComponent.setAttribute(
+				"dragging",
+				false.toString()
+			);
 		};
 
 		DynamicStyle.getInstance().addElement(
@@ -112,7 +130,7 @@ export default class Frame extends Vue {
 	}
 
 	public bringToTop(e): void {
-		DynamicStyle.getInstance().bringToTop(this.$refs.frameComponent);
+		return DynamicStyle.getInstance().bringToTop(this.$refs.frameComponent);
 	}
 
 	public get frameStyleString(): string[] {

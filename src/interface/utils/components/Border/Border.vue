@@ -1,7 +1,7 @@
 <template src="./border.template.html"></template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { DynamicStyle } from "../../DynamicStyle";
 
 @Component
@@ -15,6 +15,16 @@ export default class Border extends Vue {
 	@Prop() private colour: string;
 
 	public mounted(): void {
+		DynamicStyle.getInstance().addElement(
+			this.$refs.borderContainer,
+			this.borderStyleString
+		);
+	}
+
+	@Watch("colour")
+	public updateColour(old, newv): void {
+		if (old == newv) return;
+
 		DynamicStyle.getInstance().addElement(
 			this.$refs.borderContainer,
 			this.borderStyleString

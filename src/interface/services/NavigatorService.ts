@@ -40,6 +40,7 @@ import { RoomSessionEvent } from 'nitro-renderer/src/nitro/session/events/RoomSe
 import { HabboWebTools } from 'nitro-renderer/src/nitro/utils/HabboWebTools';
 import Vue from 'vue';
 import { NavigatorData } from '../components/navigator/common/NavigatorData';
+import { Services } from './Services';
 
 export class NavigatorService implements ILinkEventTracker
 {
@@ -86,6 +87,7 @@ export class NavigatorService implements ILinkEventTracker
         isSearching: false,
         isLoaded: false,
         isLoading: false,
+        roomCreator: false,
     });
 
     constructor()
@@ -149,7 +151,7 @@ export class NavigatorService implements ILinkEventTracker
         switch(event.type)
         {
             case RoomSessionEvent.CREATED:
-                //this._settingsService.hideNavigator()
+                Services.instance().settingService.hideNavigator();
                 return;
         }
     }
@@ -664,10 +666,9 @@ export class NavigatorService implements ILinkEventTracker
         this._states.isLoaded = true;
     }
 
-
-    public counterAdd()
+    public toggleRoomCreator(): void
     {
-        this.states.counter += 1;
+        this._states.roomCreator = !this._states.roomCreator;
     }
 
     public get states()

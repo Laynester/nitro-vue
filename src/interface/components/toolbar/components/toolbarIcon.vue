@@ -60,5 +60,27 @@ export default class ToolbarIcon extends Vue {
 	public click(): void {
 		this.$services.settingService.handleClick(this.type);
 	}
+
+	public tooltip(): string {
+		let name = "";
+		switch (this.type) {
+			default:
+				name = this.type;
+				break;
+			case "home":
+				name = "exitroom.home";
+				break;
+			case "exit":
+				name = "exitroom.hotelview";
+				break;
+			case "console":
+				name = "friendlist";
+				break;
+			case "messenger":
+			case "messenger-unread":
+				name = "messenger";
+		}
+		return "toolbar.icon.label." + name;
+	}
 }
 </script>

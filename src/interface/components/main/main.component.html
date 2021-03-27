@@ -2,7 +2,6 @@
     <Landing v-show="landingViewVisible" />
     <ToolBar :isInRoom="!landingViewVisible" />
     <Navigator v-if="$services.settingService.navigatorVisible" />
-    <Navigator v-if="$services.settingService.navigatorVisible" />
-    <Navigator v-if="$services.settingService.navigatorVisible" />
+    <NotificationCenter />
     <Room ref="room" />
 </div>

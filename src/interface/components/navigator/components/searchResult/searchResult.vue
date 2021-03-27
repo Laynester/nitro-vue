@@ -4,8 +4,11 @@
 import { NavigatorSearchResultList } from "nitro-renderer/src/nitro/communication/messages/parser/navigator/utils/NavigatorSearchResultList";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { NavigatorDisplayMode } from "../../common/NavigatorDisplayMode";
+import List from "../searchItem/List/list.vue";
 
-@Component
+@Component({
+	components: { List },
+})
 export default class HelloWorld extends Vue {
 	@Prop() private result: NavigatorSearchResultList;
 
@@ -51,6 +54,18 @@ export default class HelloWorld extends Vue {
 		}
 
 		this.$data.displayMode = NavigatorDisplayMode.LIST;
+	}
+
+	public get displayComponent(): string {
+		let component = "";
+
+		switch (this.$data.displayMode) {
+			case NavigatorDisplayMode.LIST:
+				component = "List";
+				break;
+		}
+
+		return component;
 	}
 }
 </script>

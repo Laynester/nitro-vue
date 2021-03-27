@@ -1,0 +1,27 @@
+<nitro-frame type="0" :title="'navigator.createroom.title' | translate" frameColour="#4b4b4b" titleColour="#4b4b4b"
+    class="nitro-navigator-rc" closeable="true" :closeCallback="hideCreator" resizable="false" center="true">
+    <div class="nitro-frame-content d-flex position-relative">
+        <nitro-border type="0" class="mr-1 h-100 flex-grow-1 w-100">
+            hello
+        </nitro-border>
+        <nitro-border type="0" colour="#3C3D3C" class="h-100 flex-grow-1 d-flex flex-column">
+            <div class="verticalList flex-grow-1 mb-2 h-100" data-style="0">
+                <div class="text-white text-center mb-2">{{'navigator.createroom.chooselayoutcaption' | translate}}
+                </div>
+                <div class="rc-grid" data-style="0">
+                    <nitro-border v-for="(l,i) in layouts" :key="i" type="0"
+                        :colour="form.layout == l.name ? '#6E8184' : '#CBCBCB'" class="w-100 d-flex"
+                        :class="{'text-white':form.layout == l.name}">
+                        <div class="p-2 d-flex flex-column p-2 justify-content-center h-100 w-100"
+                            @click="setRoomLayout(l.name)">
+                            <img class="d-block align-self-center" :src="getRoomLayoutImageUrl(l.name)" />
+                            <div class="w-100 text-center">
+                                {{ l.tileSize }} {{ ('navigator.createroom.tilesize') | translate }}
+                            </div>
+                        </div>
+                    </nitro-border>
+                </div>
+            </div>
+        </nitro-border>
+    </div>
+</nitro-frame>
